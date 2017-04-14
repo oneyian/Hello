@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=": MySelf" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fnj-fk-mWZ">
@@ -44,16 +44,15 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="myself" destination="Hgs-xb-1tj" id="Ady-hS-yWt"/>
-                <outlet property="other" destination="78p-XE-kPz" id="jGB-yA-zUF"/>
+                <outlet property="myself" destination="Hgs-xb-1tj" id="Ald-qX-OYM"/>
             </connections>
-            <point key="canvasLocation" x="-106" y="-78"/>
+            <point key="canvasLocation" x="-258" y="-68"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="other" id="wxP-8P-pK7">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="other" id="wxP-8P-pK7" customClass="MessageCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wxP-8P-pK7" id="wd8-Ui-O5d">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6r-8x-SUt">
@@ -80,7 +79,10 @@
                     <constraint firstItem="e6r-8x-SUt" firstAttribute="top" secondItem="wd8-Ui-O5d" secondAttribute="topMargin" constant="6" id="AuD-DJ-U4n"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="-106" y="84"/>
+            <connections>
+                <outlet property="other" destination="78p-XE-kPz" id="9h5-d2-EdP"/>
+            </connections>
+            <point key="canvasLocation" x="-258" y="68"/>
         </tableViewCell>
     </objects>
 </document>

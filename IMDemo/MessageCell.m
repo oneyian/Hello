@@ -11,21 +11,20 @@
 @implementation MessageCell
 
 +(instancetype)cellWithTableView:(UITableView*)tableView cellWithType:(MessageType)type{
-    if (type==0) {
-        MessageCell *Cell=[tableView dequeueReusableCellWithIdentifier:@"myself"];
-        if (!Cell) {
-            Cell = [[[NSBundle mainBundle] loadNibNamed:@"MessageCell" owner:self options:nil] objectAtIndex:0];
-        }
-        return Cell;
-    }else if(type==1){
-        MessageCell *Cell=[tableView dequeueReusableCellWithIdentifier:@"other"];
-        if (!Cell) {
-            Cell = [[[NSBundle mainBundle] loadNibNamed:@"MessageCell" owner:self options:nil] objectAtIndex:1];
-        }
-        return Cell;
+    NSString *identifier=[NSString new];
+    NSInteger index;
+    if (type==MessageTypeMe) {
+        identifier=@"myself";
+        index=MessageTypeMe;
     }else{
-        return nil;
+        identifier=@"other";
+        index=MessageTypeOther;
     }
+    MessageCell *Cell=[tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!Cell) {
+        Cell = [[[NSBundle mainBundle] loadNibNamed:@"MessageCell" owner:self options:nil] objectAtIndex:index];
+    }
+    return Cell;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

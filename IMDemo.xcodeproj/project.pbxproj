@@ -113,15 +113,11 @@
 		150741AA1EA0636600E24A1D /* IMDemo */ = {
 			isa = PBXGroup;
 			children = (
+				159EEA721EA11BF10013CD8C /* Controller */,
+				159EEA711EA11BEB0013CD8C /* View */,
+				159EEA701EA11BE40013CD8C /* Model */,
 				150741AE1EA0636600E24A1D /* AppDelegate.h */,
 				150741AF1EA0636600E24A1D /* AppDelegate.m */,
-				15E4B24B1EA078C300A67CDE /* MCManager.h */,
-				15E4B24C1EA078C300A67CDE /* MCManager.m */,
-				150741B11EA0636600E24A1D /* HomeViewController.h */,
-				150741B21EA0636600E24A1D /* HomeViewController.m */,
-				151D966A1EA0D92800CC880D /* MessageCell.h */,
-				151D966B1EA0D92800CC880D /* MessageCell.m */,
-				151D966C1EA0D92800CC880D /* MessageCell.xib */,
 				150741B41EA0636600E24A1D /* Main.storyboard */,
 				150741B71EA0636600E24A1D /* Assets.xcassets */,
 				150741B91EA0636600E24A1D /* LaunchScreen.storyboard */,
@@ -155,6 +151,34 @@
 				150741D21EA0636600E24A1D /* Info.plist */,
 			);
 			path = IMDemoUITests;
+			sourceTree = "<group>";
+		};
+		159EEA701EA11BE40013CD8C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				15E4B24B1EA078C300A67CDE /* MCManager.h */,
+				15E4B24C1EA078C300A67CDE /* MCManager.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		159EEA711EA11BEB0013CD8C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				151D966A1EA0D92800CC880D /* MessageCell.h */,
+				151D966B1EA0D92800CC880D /* MessageCell.m */,
+				151D966C1EA0D92800CC880D /* MessageCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		159EEA721EA11BF10013CD8C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				150741B11EA0636600E24A1D /* HomeViewController.h */,
+				150741B21EA0636600E24A1D /* HomeViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		15E4B2481EA0671200A67CDE /* Frameworks */ = {
