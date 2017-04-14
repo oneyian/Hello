@@ -8,47 +8,82 @@
 
 #import "HomeViewController.h"
 #import "AppDelegate.h"
+#import "MessageCell.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
 
-@interface HomeViewController ()
+@interface HomeViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+
 @property (nonatomic,strong) AppDelegate * appDelegate;
+@property (nonatomic,strong) NSMutableArray * MessageArray;
+@property (nonatomic,strong) NSMutableArray * DevicesArray;
+@property (nonatomic,strong) UIActivityIndicatorView *Activity;
+@property (nonatomic,strong) UITableView * DevicesTable;
+@property (nonatomic,strong) UITableView * MessageTable;
 @property (nonatomic,strong) UIButton * stop;
-@property (nonatomic,copy) NSString * UID;
+@property (nonatomic,strong) UITextField * messageField;
 
 @end
 
 @implementation HomeViewController
-
+-(NSMutableArray*)DevicesArray{
+    if (!_DevicesArray) {
+        _DevicesArray=[NSMutableArray new];
+    }
+    return _DevicesArray;
+}
+-(NSMutableArray*)MessageArray{
+    if (!_MessageArray) {
+        _MessageArray=[NSMutableArray new];
+    }
+    return _MessageArray;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _UID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:_UID];
-    [[_appDelegate mcManager] advertiseSelf:YES];
-    [self CreatButton];
+    [self.navigationItem setTitle:@"Hello"];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    _DevicesArray=[NSMutableArray new];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerDidChangeStateWithNotification:) name:@"MCDidChangeStateNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveDataWithNotification:) name:@"MCDidReceiveDataNotification" object:nil];
 
+    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
+    
+    [self CreatUI];
+    
+    [self CreatButton];
+    
+    [self CreatTable];
 }
 #pragma mark ##### UI界面 #####
--(void)BeginAction{
-    NSLog(@"开始广播");
-    [self.stop removeFromSuperview];
-    self.stop=[[UIButton alloc]initWithFrame:CGRectMake(Width/2-62, Height/2+30, 124, 30)];
-    [_stop.titleLabel setFont:[UIFont systemFontOfSize:20]];
-    [_stop addTarget:self action:@selector(stop:) forControlEvents:UIControlEventTouchUpInside];
-    [_stop setTitle:@"取消全部服务" forState:UIControlStateNormal];
-    [_stop setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [_stop setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [self.view addSubview:_stop];
-}
--(void)CreatServerView{
-    [self BeginAction];
-    NSLog(@"创建");
-}
--(void)CreatClientView{
-    [self BeginAction];
-    NSLog(@"搜索");
+-(void)CreatUI{
+    _Activity=[[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(Width/2-63, 11, 22, 22)];
+    [_Activity setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+    [self.navigationController.navigationBar addSubview:_Activity];
+
+    UIButton *add=[[UIButton alloc]initWithFrame:CGRectMake(10, Height/2+45, 30, 30)];
+    [add.titleLabel setFont:[UIFont systemFontOfSize:24]];
+    [add addTarget:self action:@selector(add:) forControlEvents:UIControlEventTouchUpInside];
+    [add setTitle:@"＋" forState:UIControlStateNormal];
+    [add setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [add setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [self.view addSubview:add];
+    
+    _messageField=[[UITextField alloc]initWithFrame:CGRectMake(50, Height/2+45, Width-120, 30)];
+    _messageField.borderStyle=UITextBorderStyleRoundedRect;
+    [_messageField setTextAlignment:NSTextAlignmentLeft];
+    _messageField.delegate=self;
+    [self.view addSubview:_messageField];
+    
+    UIButton *send=[[UIButton alloc]initWithFrame:CGRectMake(Width-60, Height/2+45, 50, 30)];
+    [send.titleLabel setFont:[UIFont systemFontOfSize:20]];
+    [send addTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
+    [send setTitle:@"Send" forState:UIControlStateNormal];
+    [send setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [send setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [self.view addSubview:send];
 }
 -(void)CreatButton{
     CGFloat padding=100;
@@ -68,18 +103,173 @@
     [Client setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [self.view addSubview:Client];
 }
+-(void)CreatTable{
+    _DevicesTable=[[UITableView alloc]initWithFrame:CGRectMake(0, Height/2+190, Width, Height-Height/2+190)];
+    _DevicesTable.separatorStyle=UITableViewCellSeparatorStyleNone;
+    [_DevicesTable setDelegate:self];
+    [_DevicesTable setDataSource:self];
+    [self.view addSubview:_DevicesTable];
+    
+    _MessageTable=[[UITableView alloc]initWithFrame:CGRectMake(0, 64, Width, Height/2+45-64)];
+    _MessageTable.separatorStyle=UITableViewCellSeparatorStyleNone;
+    [_MessageTable setDelegate:self];
+    [_MessageTable setDataSource:self];
+    [self.view addSubview:_MessageTable];
+}
+#pragma mark ##### 监控连接状态 #####
+-(void)peerDidChangeStateWithNotification:(NSNotification *)notification{
+    MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
+    NSString *peerDisplayName = peerID.displayName;
+    MCSessionState state = [[[notification userInfo] objectForKey:@"state"] intValue];
+    
+    if (state != MCSessionStateConnecting) {
+        if (state == MCSessionStateConnected) {
+            [self.DevicesArray addObject:peerDisplayName];
+            [_DevicesTable reloadData];
+            [_Activity stopAnimating];
+            [self.navigationItem setTitle:@"连接成功!"];
+        }
+        else if (state == MCSessionStateNotConnected){
+            if ([self.DevicesArray count] > 0) {
+                int indexOfPeer = (int)[self.DevicesArray indexOfObject:peerDisplayName];
+                [self.DevicesArray removeObjectAtIndex:indexOfPeer];
+                [_DevicesTable reloadData];
+                [_Activity startAnimating];
+                [self.navigationItem setTitle:@"等待加入.."];
+            }
+        }
+    }
+}
+#pragma mark ##### 数据传输 #####
+-(void)didReceiveDataWithNotification:(NSNotification *)notification{
+    NSData *receivedData = [[notification userInfo] objectForKey:@"data"];
+    NSString *receivedText = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
+    
+    NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:receivedText,@"message",@"1",@"type", nil];
+    [self.MessageArray addObject:messageData];
+    [_MessageTable reloadData];
+}
 #pragma mark ##### 控件实现区 #####
 -(void)server:(UIButton*)sender{
+    [_appDelegate.mcManager advertiseSelf:YES];
+    [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
+    [_Activity startAnimating];
+    [self.navigationItem setTitle:@"等待加入.."];
 
-    [self CreatServerView];
-}
--(void)client:(UIButton*)sender{
-
-    
-    [self CreatClientView];
+    [_stop removeFromSuperview];
+    _stop=[[UIButton alloc]initWithFrame:CGRectMake(Width/2+55, Height/2+100, 90, 30)];
+    [_stop.titleLabel setFont:[UIFont systemFontOfSize:20]];
+    [_stop addTarget:self action:@selector(stop:) forControlEvents:UIControlEventTouchUpInside];
+    [_stop setTitle:@"销毁房间" forState:UIControlStateNormal];
+    [_stop setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [_stop setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.view addSubview:_stop];
 }
 -(void)stop:(UIButton*)sender{
+    [_Activity stopAnimating];
+    [self.navigationItem setTitle:@"Hello"];
+    [[_appDelegate mcManager] advertiseSelf:NO];
+    [_appDelegate.mcManager.session disconnect];
+    [self.DevicesArray removeAllObjects];
+    [_DevicesTable reloadData];
     [sender removeFromSuperview];
+}
+-(void)client:(UIButton*)sender{
+    [[_appDelegate mcManager] setupMCBrowser];
+    [[[_appDelegate mcManager] browser] setDelegate:self];
+    [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+}
+-(void)add:(UIButton*)sender{
+    
+}
+-(void)send:(UIButton*)sender{
+    NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:_messageField.text,@"message",@"0",@"type", nil];
+    [self.MessageArray addObject:messageData];
+    [_MessageTable reloadData];
+    
+    NSData *dataToSend = [_messageField.text dataUsingEncoding:NSUTF8StringEncoding];
+    NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
+    NSError *error;
+    
+    [_appDelegate.mcManager.session sendData:dataToSend
+                                     toPeers:allPeers
+                                    withMode:MCSessionSendDataReliable
+                                       error:&error];
+    
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+    [_messageField setText:@""];
+    [_messageField resignFirstResponder];
+}
+#pragma mark ##### 代理方法区 #####
+-(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
+    [_Activity stopAnimating];
+    [self.navigationItem setTitle:@"连接成功!"];
+    [_appDelegate.mcManager.browser dismissViewControllerAnimated:YES completion:nil];
+}
+-(void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController{
+    [_Activity stopAnimating];
+    [self.navigationItem setTitle:@"Hello"];
+    [_appDelegate.mcManager.browser dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (tableView==_DevicesTable) {
+        return self.DevicesArray.count;
+    }else{
+        return self.MessageArray.count;
+    }
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView==_DevicesTable) {
+    return 30;
+    }else{
+        return 50;
+    }
+}
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView==_DevicesTable) {
+        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"id"];
+        if (!cell) {
+            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];
+        }
+        cell.textLabel.text=self.DevicesArray[indexPath.row];
+        cell.backgroundColor=[UIColor groupTableViewBackgroundColor];
+        return cell;
+    }else{
+        CGFloat padding=40;
+        if ([[self.MessageArray[indexPath.row] objectForKey:@"type"] integerValue]==0) {
+            MessageCell *Cell=[MessageCell cellWithTableView:tableView cellWithType:MessageTypeMe];
+            Cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            Cell.myself.text=[self.MessageArray[indexPath.row] objectForKey:@"message"];
+            if (Cell.myself.text.length>=15) {
+                [Cell.myself setFrame:CGRectMake(10, 10, Width-90, 30)];
+            }else{
+                [Cell.myself setFrame:CGRectMake(Width-Cell.myself.text.length*15-80-padding, 10, Cell.myself.text.length*15+padding, 30)];
+            }
+            Cell.myself.layer.cornerRadius=10;
+            Cell.myself.clipsToBounds=YES;
+            return Cell;
+        }else{
+            MessageCell *Cell=[MessageCell cellWithTableView:tableView cellWithType:MessageTypeOther];
+            Cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            Cell.other.text=[self.MessageArray[indexPath.row] objectForKey:@"message"];
+            if (Cell.myself.text.length>=15) {
+                [Cell.other setFrame:CGRectMake(80, 10, Width-90, 30)];
+            }else{
+                [Cell.other setFrame:CGRectMake(80, 10, Cell.myself.text.length*15+padding, 30)];
+            }
+            Cell.other.layer.cornerRadius=10;
+            Cell.other.clipsToBounds=YES;
+            return Cell;
+        }
+    }
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_messageField resignFirstResponder];
+    return YES;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

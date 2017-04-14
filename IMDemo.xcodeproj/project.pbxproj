@@ -15,6 +15,8 @@
 		150741BB1EA0636600E24A1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 150741B91EA0636600E24A1D /* LaunchScreen.storyboard */; };
 		150741C61EA0636600E24A1D /* IMDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 150741C51EA0636600E24A1D /* IMDemoTests.m */; };
 		150741D11EA0636600E24A1D /* IMDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 150741D01EA0636600E24A1D /* IMDemoUITests.m */; };
+		151D966D1EA0D92800CC880D /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 151D966B1EA0D92800CC880D /* MessageCell.m */; };
+		151D966E1EA0D92800CC880D /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151D966C1EA0D92800CC880D /* MessageCell.xib */; };
 		15E4B24A1EA0671200A67CDE /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */; };
 		15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E4B24C1EA078C300A67CDE /* MCManager.m */; };
 /* End PBXBuildFile section */
@@ -53,6 +55,9 @@
 		150741CC1EA0636600E24A1D /* IMDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		150741D01EA0636600E24A1D /* IMDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMDemoUITests.m; sourceTree = "<group>"; };
 		150741D21EA0636600E24A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		151D966A1EA0D92800CC880D /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
+		151D966B1EA0D92800CC880D /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
+		151D966C1EA0D92800CC880D /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		15E4B24B1EA078C300A67CDE /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
 		15E4B24C1EA078C300A67CDE /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
@@ -114,6 +119,9 @@
 				15E4B24C1EA078C300A67CDE /* MCManager.m */,
 				150741B11EA0636600E24A1D /* HomeViewController.h */,
 				150741B21EA0636600E24A1D /* HomeViewController.m */,
+				151D966A1EA0D92800CC880D /* MessageCell.h */,
+				151D966B1EA0D92800CC880D /* MessageCell.m */,
+				151D966C1EA0D92800CC880D /* MessageCell.xib */,
 				150741B41EA0636600E24A1D /* Main.storyboard */,
 				150741B71EA0636600E24A1D /* Assets.xcassets */,
 				150741B91EA0636600E24A1D /* LaunchScreen.storyboard */,
@@ -267,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				150741BB1EA0636600E24A1D /* LaunchScreen.storyboard in Resources */,
+				151D966E1EA0D92800CC880D /* MessageCell.xib in Resources */,
 				150741B81EA0636600E24A1D /* Assets.xcassets in Resources */,
 				150741B61EA0636600E24A1D /* Main.storyboard in Resources */,
 			);
@@ -293,6 +302,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				151D966D1EA0D92800CC880D /* MessageCell.m in Sources */,
 				150741B31EA0636600E24A1D /* HomeViewController.m in Sources */,
 				15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */,
 				150741B01EA0636600E24A1D /* AppDelegate.m in Sources */,

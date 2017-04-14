@@ -17,4 +17,5 @@
 @property (nonatomic, strong) MCAdvertiserAssistant *advertiser;
 -(void)setupPeerAndSessionWithDisplayName:(NSString *)displayName;
 -(void)advertiseSelf:(BOOL)shouldAdvertise;
+-(void)setupMCBrowser;
 @end

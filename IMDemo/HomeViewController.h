@@ -11,6 +11,7 @@
 
 @interface HomeViewController : UIViewController <MCBrowserViewControllerDelegate>
 
-
+-(void)peerDidChangeStateWithNotification:(NSNotification *)notification;
+-(void)didReceiveDataWithNotification:(NSNotification *)notification;
 @end
 
