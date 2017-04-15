@@ -22,7 +22,7 @@
     
     return self;
 }
-#pragma mark ##### 代理方法区 #####
+#pragma mark ##### 配置信息 #####
 -(void)setupPeerAndSessionWithDisplayName:(NSString *)displayName{
     _peerID = [[MCPeerID alloc] initWithDisplayName:displayName];
     _session = [[MCSession alloc] initWithPeer:_peerID];
@@ -41,6 +41,7 @@
         _advertiser = nil;
     }
 }
+#pragma mark ##### 数据交互 #####
 -(void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state{
     NSDictionary *dict = @{@"peerID": peerID,@"state" : [NSNumber numberWithInt:state]};
     

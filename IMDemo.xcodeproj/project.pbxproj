@@ -19,6 +19,7 @@
 		151D966E1EA0D92800CC880D /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151D966C1EA0D92800CC880D /* MessageCell.xib */; };
 		15E4B24A1EA0671200A67CDE /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */; };
 		15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E4B24C1EA078C300A67CDE /* MCManager.m */; };
+		15FF90D81EA1ABBF00AF2B1A /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FF90D71EA1ABBF00AF2B1A /* MessageController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		15E4B24B1EA078C300A67CDE /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
 		15E4B24C1EA078C300A67CDE /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
+		15FF90D61EA1ABBF00AF2B1A /* MessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageController.h; sourceTree = "<group>"; };
+		15FF90D71EA1ABBF00AF2B1A /* MessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +180,8 @@
 			children = (
 				150741B11EA0636600E24A1D /* HomeViewController.h */,
 				150741B21EA0636600E24A1D /* HomeViewController.m */,
+				15FF90D61EA1ABBF00AF2B1A /* MessageController.h */,
+				15FF90D71EA1ABBF00AF2B1A /* MessageController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 				15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */,
 				150741B01EA0636600E24A1D /* AppDelegate.m in Sources */,
 				150741AD1EA0636600E24A1D /* main.m in Sources */,
+				15FF90D81EA1ABBF00AF2B1A /* MessageController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
