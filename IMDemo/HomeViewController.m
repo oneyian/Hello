@@ -84,7 +84,7 @@
     [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
     [_appDelegate.mcManager advertiseSelf:YES];
 
-    _Alert =[UIAlertController alertControllerWithTitle:@"房间创建成功" message:@"正在等待其他用户进入..." preferredStyle:UIAlertControllerStyleAlert];
+    _Alert =[UIAlertController alertControllerWithTitle:@"创建成功" message:@"正在等待其他用户进入..." preferredStyle:UIAlertControllerStyleAlert];
     [_Alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [[_appDelegate mcManager] advertiseSelf:NO];
         [_appDelegate.mcManager.session disconnect];
@@ -94,13 +94,13 @@
     [self presentViewController:_Alert animated:YES completion:nil];
 }
 -(void)client:(UIButton*)sender{
-    [self PresentMessageController];
-//    [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
-//    [_appDelegate.mcManager advertiseSelf:YES];
-//    
-//    [[_appDelegate mcManager] setupMCBrowser];
-//    [[[_appDelegate mcManager] browser] setDelegate:self];
-//    [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+    //[self PresentMessageController];
+    [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
+    [_appDelegate.mcManager advertiseSelf:YES];
+    
+    [[_appDelegate mcManager] setupMCBrowser];
+    [[[_appDelegate mcManager] browser] setDelegate:self];
+    [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
 }
 #pragma mark ##### 连接状态 #####
 -(void)peerDidChangeStateWithNotification:(NSNotification *)notification{
