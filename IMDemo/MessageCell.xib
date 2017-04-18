@@ -13,76 +13,92 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myself" id="KGk-i7-Jjw" customClass="MessageCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=": MySelf" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fnj-fk-mWZ">
-                        <rect key="frame" x="250" y="14" width="62" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="chat_send_nor" translatesAutoresizingMaskIntoConstraints="NO" id="hiT-Pa-CFt">
+                        <rect key="frame" x="10" y="35" width="300" height="38"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MySelf" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fnj-fk-mWZ">
+                        <rect key="frame" x="110" y="10" width="200" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="62" id="2Nz-Kv-L5C"/>
-                            <constraint firstAttribute="height" constant="21" id="Hz9-SJ-NKH"/>
+                            <constraint firstAttribute="width" constant="200" id="Rl3-DP-KcP"/>
+                            <constraint firstAttribute="height" constant="20" id="orD-Uz-lfo"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.6142424738219896" green="0.28906155360982" blue="0.076091154112787926" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hgs-xb-1tj">
-                        <rect key="frame" x="0.0" y="0.0" width="242" height="50"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="message" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hgs-xb-1tj">
+                        <rect key="frame" x="30" y="55" width="260" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.8479075701598523" green="0.89201405334782102" blue="0.96901587041884818" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="backgroundColor" red="0.8479075701598523" green="0.89201405334782102" blue="0.96901587041884818" alpha="0.0" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Fnj-fk-mWZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="85z-Nh-aXX"/>
-                    <constraint firstItem="Fnj-fk-mWZ" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Ee9-8c-T51"/>
+                    <constraint firstItem="Fnj-fk-mWZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="aw0-q4-bgx"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Fnj-fk-mWZ" secondAttribute="trailing" constant="2" id="ctl-SH-8fR"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="mymessage" destination="hiT-Pa-CFt" id="Oab-DI-jfs"/>
+                <outlet property="myname" destination="Fnj-fk-mWZ" id="ae9-Dt-sjL"/>
                 <outlet property="myself" destination="Hgs-xb-1tj" id="Ald-qX-OYM"/>
             </connections>
-            <point key="canvasLocation" x="-258" y="-68"/>
+            <point key="canvasLocation" x="-494" y="-77"/>
         </tableViewCell>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="other" id="wxP-8P-pK7" customClass="MessageCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wxP-8P-pK7" id="wd8-Ui-O5d">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6r-8x-SUt">
-                        <rect key="frame" x="8" y="14" width="53" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IPh-Oz-tfI">
+                        <rect key="frame" x="10" y="35" width="300" height="38"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6r-8x-SUt">
+                        <rect key="frame" x="10" y="10" width="200" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="53" id="MHo-R5-nMT"/>
-                            <constraint firstAttribute="height" constant="21" id="SdI-gT-bAX"/>
+                            <constraint firstAttribute="height" constant="20" id="AmP-Kd-nw2"/>
+                            <constraint firstAttribute="width" constant="200" id="BV4-d0-u2g"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.28283031341443909" green="0.72470140706806285" blue="0.15800796831860009" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78p-XE-kPz">
-                        <rect key="frame" x="78" y="0.0" width="242" height="50"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78p-XE-kPz">
+                        <rect key="frame" x="30" y="55" width="260" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.92351112565445026" green="0.89467354455924997" blue="0.58525932673671288" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="backgroundColor" red="0.92351112565445026" green="0.89467354455924997" blue="0.58525932673671288" alpha="0.0" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="e6r-8x-SUt" firstAttribute="leading" secondItem="wd8-Ui-O5d" secondAttribute="leadingMargin" id="8aN-gc-haa"/>
-                    <constraint firstItem="e6r-8x-SUt" firstAttribute="top" secondItem="wd8-Ui-O5d" secondAttribute="topMargin" constant="6" id="AuD-DJ-U4n"/>
+                    <constraint firstItem="e6r-8x-SUt" firstAttribute="leading" secondItem="wd8-Ui-O5d" secondAttribute="leadingMargin" constant="2" id="mEe-zT-yHx"/>
+                    <constraint firstItem="e6r-8x-SUt" firstAttribute="top" secondItem="wd8-Ui-O5d" secondAttribute="topMargin" constant="2" id="rfL-SG-vZ2"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="other" destination="78p-XE-kPz" id="9h5-d2-EdP"/>
+                <outlet property="othermessage" destination="IPh-Oz-tfI" id="EVJ-XV-kcM"/>
+                <outlet property="othername" destination="e6r-8x-SUt" id="i9L-dR-HFj"/>
             </connections>
-            <point key="canvasLocation" x="-258" y="68"/>
+            <point key="canvasLocation" x="-494" y="124"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="chat_send_nor" width="64" height="56"/>
+    </resources>
 </document>

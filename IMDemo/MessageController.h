@@ -11,5 +11,5 @@
 @interface MessageController : UIViewController
 
 -(void)didReceiveDataWithNotification:(NSNotification *)notification;
-
+@property (nonatomic,strong) NSMutableArray * DevicesArray;
 @end

@@ -17,6 +17,10 @@
 		150741D11EA0636600E24A1D /* IMDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 150741D01EA0636600E24A1D /* IMDemoUITests.m */; };
 		151D966D1EA0D92800CC880D /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 151D966B1EA0D92800CC880D /* MessageCell.m */; };
 		151D966E1EA0D92800CC880D /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151D966C1EA0D92800CC880D /* MessageCell.xib */; };
+		15952D2B1EA6481800F1F23F /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15952D2A1EA6481800F1F23F /* TextView.m */; };
+		15952D2E1EA6482800F1F23F /* ToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15952D2D1EA6482800F1F23F /* ToolView.m */; };
+		15952D311EA64F9700F1F23F /* HeaderBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 15952D301EA64F9700F1F23F /* HeaderBar.m */; };
+		15952D341EA6520D00F1F23F /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 15952D331EA6520D00F1F23F /* MessageModel.m */; };
 		15E4B24A1EA0671200A67CDE /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */; };
 		15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E4B24C1EA078C300A67CDE /* MCManager.m */; };
 		15FF90D81EA1ABBF00AF2B1A /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FF90D71EA1ABBF00AF2B1A /* MessageController.m */; };
@@ -59,6 +63,14 @@
 		151D966A1EA0D92800CC880D /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
 		151D966B1EA0D92800CC880D /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		151D966C1EA0D92800CC880D /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		15952D291EA6481800F1F23F /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
+		15952D2A1EA6481800F1F23F /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
+		15952D2C1EA6482800F1F23F /* ToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolView.h; sourceTree = "<group>"; };
+		15952D2D1EA6482800F1F23F /* ToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolView.m; sourceTree = "<group>"; };
+		15952D2F1EA64F9700F1F23F /* HeaderBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderBar.h; sourceTree = "<group>"; };
+		15952D301EA64F9700F1F23F /* HeaderBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderBar.m; sourceTree = "<group>"; };
+		15952D321EA6520D00F1F23F /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
+		15952D331EA6520D00F1F23F /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
 		15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		15E4B24B1EA078C300A67CDE /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
 		15E4B24C1EA078C300A67CDE /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
@@ -116,11 +128,8 @@
 		150741AA1EA0636600E24A1D /* IMDemo */ = {
 			isa = PBXGroup;
 			children = (
-				159EEA721EA11BF10013CD8C /* Controller */,
-				159EEA711EA11BEB0013CD8C /* View */,
-				159EEA701EA11BE40013CD8C /* Model */,
-				150741AE1EA0636600E24A1D /* AppDelegate.h */,
-				150741AF1EA0636600E24A1D /* AppDelegate.m */,
+				157BE4AD1EA62A17007F3B2F /* HomeViewController */,
+				1586BAF51EA6173A0083F897 /* MessageController */,
 				150741B41EA0636600E24A1D /* Main.storyboard */,
 				150741B71EA0636600E24A1D /* Assets.xcassets */,
 				150741B91EA0636600E24A1D /* LaunchScreen.storyboard */,
@@ -156,11 +165,34 @@
 			path = IMDemoUITests;
 			sourceTree = "<group>";
 		};
+		157BE4AD1EA62A17007F3B2F /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				150741AE1EA0636600E24A1D /* AppDelegate.h */,
+				150741AF1EA0636600E24A1D /* AppDelegate.m */,
+				150741B11EA0636600E24A1D /* HomeViewController.h */,
+				150741B21EA0636600E24A1D /* HomeViewController.m */,
+			);
+			name = HomeViewController;
+			sourceTree = "<group>";
+		};
+		1586BAF51EA6173A0083F897 /* MessageController */ = {
+			isa = PBXGroup;
+			children = (
+				159EEA701EA11BE40013CD8C /* Model */,
+				159EEA711EA11BEB0013CD8C /* View */,
+				159EEA721EA11BF10013CD8C /* Controller */,
+			);
+			name = MessageController;
+			sourceTree = "<group>";
+		};
 		159EEA701EA11BE40013CD8C /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				15E4B24B1EA078C300A67CDE /* MCManager.h */,
 				15E4B24C1EA078C300A67CDE /* MCManager.m */,
+				15952D321EA6520D00F1F23F /* MessageModel.h */,
+				15952D331EA6520D00F1F23F /* MessageModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -168,6 +200,12 @@
 		159EEA711EA11BEB0013CD8C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				15952D291EA6481800F1F23F /* TextView.h */,
+				15952D2A1EA6481800F1F23F /* TextView.m */,
+				15952D2C1EA6482800F1F23F /* ToolView.h */,
+				15952D2D1EA6482800F1F23F /* ToolView.m */,
+				15952D2F1EA64F9700F1F23F /* HeaderBar.h */,
+				15952D301EA64F9700F1F23F /* HeaderBar.m */,
 				151D966A1EA0D92800CC880D /* MessageCell.h */,
 				151D966B1EA0D92800CC880D /* MessageCell.m */,
 				151D966C1EA0D92800CC880D /* MessageCell.xib */,
@@ -178,8 +216,6 @@
 		159EEA721EA11BF10013CD8C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				150741B11EA0636600E24A1D /* HomeViewController.h */,
-				150741B21EA0636600E24A1D /* HomeViewController.m */,
 				15FF90D61EA1ABBF00AF2B1A /* MessageController.h */,
 				15FF90D71EA1ABBF00AF2B1A /* MessageController.m */,
 			);
@@ -331,12 +367,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15952D2B1EA6481800F1F23F /* TextView.m in Sources */,
 				151D966D1EA0D92800CC880D /* MessageCell.m in Sources */,
 				150741B31EA0636600E24A1D /* HomeViewController.m in Sources */,
 				15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */,
 				150741B01EA0636600E24A1D /* AppDelegate.m in Sources */,
 				150741AD1EA0636600E24A1D /* main.m in Sources */,
+				15952D2E1EA6482800F1F23F /* ToolView.m in Sources */,
+				15952D341EA6520D00F1F23F /* MessageModel.m in Sources */,
 				15FF90D81EA1ABBF00AF2B1A /* MessageController.m in Sources */,
+				15952D311EA64F9700F1F23F /* HeaderBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +525,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YTUY93QZ83;
 				INFOPLIST_FILE = IMDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.main.IMDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -497,6 +538,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YTUY93QZ83;
 				INFOPLIST_FILE = IMDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.main.IMDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

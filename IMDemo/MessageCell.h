@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class MessageModel;
 
 typedef enum {
     MessageTypeMe = 0, // 自己发的
@@ -15,8 +16,15 @@ typedef enum {
 
 @interface MessageCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *myname;
+@property (weak, nonatomic) IBOutlet UIImageView *mymessage;
 @property (weak, nonatomic) IBOutlet UILabel *myself;
+
+@property (weak, nonatomic) IBOutlet UILabel *othername;
+@property (weak, nonatomic) IBOutlet UIImageView *othermessage;
 @property (weak, nonatomic) IBOutlet UILabel *other;
 
-+(instancetype)cellWithTableView:(UITableView*)tableView cellWithType:(MessageType)type;
++(instancetype)cellWithTableView:(UITableView*)tableView dataWithModel:(MessageModel*)model;
+
++(CGSize)sizeWithString:(NSString*)string;
 @end

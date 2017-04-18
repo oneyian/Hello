@@ -9,6 +9,10 @@
 #import "MessageController.h"
 #import "AppDelegate.h"
 #import "MessageCell.h"
+#import "MessageModel.h"
+#import "TextView.h"
+#import "ToolView.h"
+#import "HeaderBar.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
@@ -18,19 +22,24 @@
 
 @property (nonatomic,strong) UITableView * MessageTable;
 @property (nonatomic,strong) NSMutableArray * MessageArray;
-@property (nonatomic,strong) UIView * ToolView;
-@property (nonatomic,strong) UIView * TextView;
-@property (nonatomic,strong) UITextView * MessageText;
-@property BOOL isN;
+
 @property (nonatomic,assign) CGFloat OldY;
 @property (nonatomic,assign) CGFloat NewHeight;
 @property (nonatomic,assign) CGRect KeyBoardFrame;
+/** 各部分View */
+@property (nonatomic,strong) HeaderBar * HeaderBar;
+@property (nonatomic,strong) TextView * TextView;
+@property (nonatomic,strong) ToolView * ToolView;
 @end
 
 @implementation MessageController
 -(NSMutableArray*)MessageArray{
     if (!_MessageArray) {
         _MessageArray=[NSMutableArray new];
+        NSDictionary *myself=[[NSDictionary alloc]initWithObjectsAndKeys:@"Me",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"0",@"type", nil];
+        NSDictionary *other=[[NSDictionary alloc]initWithObjectsAndKeys:@"Other",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"1",@"type", nil];
+        [_MessageArray addObject:myself];
+        [_MessageArray addObject:other];
     }
     return _MessageArray;
 }
@@ -57,19 +66,9 @@
 -(void)CreatUIView{
     self.automaticallyAdjustsScrollViewInsets = NO;//关闭布局
     
-    UINavigationBar *HeaderBar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, Width, 64)];
-    [self.view addSubview:HeaderBar];
-    
-    UILabel *title=[[UILabel alloc]initWithFrame:CGRectMake(Width/2-50, 30, 100, 20)];
-    title.font=[UIFont systemFontOfSize:19];
-    title.text=@"Hello World";
-    [HeaderBar addSubview:title];
-    
-    UIButton *Menu=[[UIButton alloc]initWithFrame:CGRectMake(Width-50, 20, 40, 40)];
-    [Menu setImage:[UIImage imageNamed:@"ic_menu_normal"] forState:UIControlStateNormal];
-    [Menu setImage:[UIImage imageNamed:@"ic_menu_highlighted"] forState:UIControlStateHighlighted];
-    [Menu addTarget:self action:@selector(menu:) forControlEvents:UIControlEventTouchUpInside];
-    [HeaderBar addSubview:Menu];
+    _HeaderBar=[[HeaderBar alloc]initWithFrame:CGRectMake(0, 0, Width, 64)];
+    [_HeaderBar.menu addTarget:self action:@selector(menu:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_HeaderBar];
     
     _MessageTable=[[UITableView alloc]initWithFrame:CGRectMake(0,64, Width, Height-64-85.5) style:UITableViewStylePlain];
     [_MessageTable setBackgroundColor:self.view.backgroundColor];
@@ -79,41 +78,15 @@
     [_MessageTable setDataSource:self];
     [self.view addSubview:_MessageTable];
     
-    _TextView=[[UIView alloc]initWithFrame:CGRectMake(0, Height-85.5, Width, 5+30.5)];
+    _TextView=[[TextView alloc]initWithFrame:CGRectMake(0, Height-85.5, Width, 5+30.5)];
     [_TextView setBackgroundColor:self.view.backgroundColor];
+    [_TextView.textView setDelegate:self];
     [self.view addSubview:_TextView];
     
-    _MessageText=[[UITextView alloc]initWithFrame:CGRectMake(10, 5, Width-20, 30.5)];
-    _MessageText.textContainerInset = UIEdgeInsetsMake(5,5, 5, 5);
-    [_MessageText setShowsVerticalScrollIndicator:NO];
-    [_MessageText setScrollEnabled:NO];
-    [_MessageText setFont:[UIFont systemFontOfSize:17]];
-    [_MessageText.layer setCornerRadius:5];
-    [_MessageText setReturnKeyType:UIReturnKeySend];
-    [_MessageText setTextAlignment:NSTextAlignmentLeft];
-    _MessageText.delegate=self;
-    [_TextView addSubview:_MessageText];
-    
-    _ToolView=[[UIView alloc]initWithFrame:CGRectMake(0, Height-50, Width, 50)];
+    _ToolView=[[ToolView alloc]initWithFrame:CGRectMake(0, Height-50, Width, 50)];
     [_ToolView setBackgroundColor:self.view.backgroundColor];
+    [_ToolView.image addTarget:self action:@selector(image:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_ToolView];
-    
-    UIButton *addFile=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 30, 30)];
-    [addFile addTarget:self action:@selector(addfile:) forControlEvents:UIControlEventTouchUpInside];
-    [addFile setImage:[UIImage imageNamed:@"ic_addfile"] forState:UIControlStateNormal];
-    [_ToolView addSubview:addFile];
-    
-    //键盘工具条
-    UIToolbar *Tool=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, Width, 35)];
-    Tool.barStyle=UIBarStyleDefault;
-    UIBarButtonItem *bt1=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *bt2=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *done=[[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
-    done.tintColor=[UIColor brownColor];
-    NSArray *Darray=@[bt1,bt2,done];
-    [Tool setItems:Darray];
-    [_MessageText setInputAccessoryView:Tool];
-    
     //监听键盘
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Showkeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hidekeyboard:) name:UIKeyboardWillHideNotification object:nil];
@@ -129,7 +102,7 @@
     [_appDelegate.mcManager.session disconnect];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
--(void)addfile:(UIButton*)sender{
+-(void)image:(UIButton*)image{
     
 }
 - (void)Showkeyboard:(NSNotification *)notification{
@@ -202,74 +175,53 @@
         }];
     }
 }
--(void)done:(UIBarButtonItem*)sender{
-    [_MessageText resignFirstResponder];
-}
 #pragma mark ##### 代理方法实现 #####
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.MessageArray.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    if (_MessageArray.count>0) {
+        MessageModel *model=[MessageModel messageWithModel:_MessageArray[indexPath.row]];
+        return [MessageCell sizeWithString:model.message].height+70;
+    }else{
+        return 0.01f;
+    }
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-        CGFloat padding=40;
-        if ([[_MessageArray[indexPath.row] objectForKey:@"type"] integerValue]==0) {
-            MessageCell *Cell=[MessageCell cellWithTableView:tableView cellWithType:MessageTypeMe];
-            [Cell setBackgroundColor:self.view.backgroundColor];
-            Cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            Cell.myself.text=[_MessageArray[indexPath.row] objectForKey:@"message"];
-            if (Cell.myself.text.length>=15) {
-                [Cell.myself setFrame:CGRectMake(10, 10, Width-90, 30)];
-            }else{
-                [Cell.myself setFrame:CGRectMake(Width-Cell.myself.text.length*15-80-padding, 10, Cell.myself.text.length*15+padding, 30)];
-            }
-            Cell.myself.layer.cornerRadius=10;
-            Cell.myself.clipsToBounds=YES;
-            return Cell;
-        }else{
-            MessageCell *Cell=[MessageCell cellWithTableView:tableView cellWithType:MessageTypeOther];
-            Cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            Cell.other.text=[_MessageArray[indexPath.row] objectForKey:@"message"];
-            if (Cell.other.text.length>=15) {
-                [Cell.other setFrame:CGRectMake(80, 10, Width-90, 30)];
-            }else{
-                [Cell.other setFrame:CGRectMake(80, 10, Cell.other.text.length*15+padding, 30)];
-            }
-            Cell.other.layer.cornerRadius=10;
-            Cell.other.clipsToBounds=YES;
-            return Cell;
-        }
+    MessageModel *model=[MessageModel messageWithModel:_MessageArray[indexPath.row]];
+    MessageCell *Cell=[MessageCell cellWithTableView:tableView dataWithModel:model];
+    return Cell;
 }
 - (void)textViewDidChange:(UITextView *)textView{
     CGSize newSize = [textView sizeThatFits:CGSizeMake(textView.frame.size.width,MAXFLOAT)];
     
     if((int)newSize.height>=132) {
         _TextView.frame=CGRectMake(0, _OldY-(132-30.5), Width, 5+132);
-        _MessageText.frame=CGRectMake(10, 5, Width-20, 132);
+        _TextView.textView.frame=CGRectMake(10, 5, Width-20, 132);
         _NewHeight=132;
         if ((int)newSize.height>=172) {
-                [_MessageText setScrollEnabled:YES];
-                [_MessageText setShowsVerticalScrollIndicator:YES];
+                [_TextView.textView setScrollEnabled:YES];
+                [_TextView.textView setShowsVerticalScrollIndicator:YES];
         }
     }else{
         _TextView.frame=CGRectMake(0, _OldY-(newSize.height-30.5), Width, 5+newSize.height);
-        _MessageText.frame=CGRectMake(10, 5, Width-20, newSize.height);
+        _TextView.textView.frame=CGRectMake(10, 5, Width-20, newSize.height);
         _NewHeight=newSize.height;
-        [_MessageText setScrollEnabled:NO];
-        [_MessageText setShowsVerticalScrollIndicator:NO];
+        [_TextView.textView setScrollEnabled:NO];
+        [_TextView.textView setShowsVerticalScrollIndicator:NO];
     }
 }
 #pragma mark ##### 发送数据 #####
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){
-        if (![_MessageText.text isEqualToString:@""]) {
-            NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:_MessageText.text,@"message",@"0",@"type", nil];
+        if (![_TextView.textView.text isEqualToString:@""]) {
+            
+            NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:_appDelegate.mcManager.peerID.displayName,@"name",_TextView.textView.text,@"message",@"0",@"type", nil];
             [_MessageArray addObject:messageData];
             [_MessageTable reloadData];
             [self ShowFootCell];
             
-            NSData *dataToSend = [_MessageText.text dataUsingEncoding:NSUTF8StringEncoding];
+            NSData *dataToSend = [_TextView.textView.text dataUsingEncoding:NSUTF8StringEncoding];
             NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
             NSError *error;
             
@@ -277,7 +229,7 @@
                                              toPeers:allPeers
                                             withMode:MCSessionSendDataReliable
                                                error:&error];
-            [_MessageText setText:@""];
+            [_TextView.textView setText:@""];
             _TextView.frame=CGRectMake(0, _KeyBoardFrame.origin.y-50-35.5, Width, 35.5);
             
             _MessageTable.frame=CGRectMake(0,64, Width, _KeyBoardFrame.origin.y-64-50-35.5);
@@ -286,17 +238,13 @@
     }
     return YES;
 }
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [_MessageText resignFirstResponder];
-    
-}
 #pragma mark ##### 数据接收 #####
 -(void)didReceiveDataWithNotification:(NSNotification *)notification{
+    MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
     NSData *receivedData = [[notification userInfo] objectForKey:@"data"];
     NSString *receivedText = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
     
-    NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:receivedText,@"message",@"1",@"type", nil];
+    NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:peerID.displayName,@"name",receivedText,@"message",@"1",@"type", nil];
     [_MessageArray addObject:messageData];
     dispatch_async(dispatch_get_main_queue(), ^{
         [_MessageTable reloadData];

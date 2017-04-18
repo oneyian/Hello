@@ -7,13 +7,14 @@
 //
 
 #import "HomeViewController.h"
+#import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "AppDelegate.h"
 #import "MessageController.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
 
-@interface HomeViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface HomeViewController ()<UITableViewDelegate,UITableViewDataSource,MCBrowserViewControllerDelegate>
 
 @property (nonatomic,strong) AppDelegate * appDelegate;
 @property (nonatomic,strong) UITableView * DevicesTable;
@@ -94,18 +95,18 @@
     [self presentViewController:_Alert animated:YES completion:nil];
 }
 -(void)client:(UIButton*)sender{
-    //[self PresentMessageController];
+    [self PresentMessageController];
     [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
     [_appDelegate.mcManager advertiseSelf:YES];
-    
-    [[_appDelegate mcManager] setupMCBrowser];
-    [[[_appDelegate mcManager] browser] setDelegate:self];
-    [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+//    
+//    [[_appDelegate mcManager] setupMCBrowser];
+//    [[[_appDelegate mcManager] browser] setDelegate:self];
+//    [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
 }
 #pragma mark ##### 连接状态 #####
 -(void)peerDidChangeStateWithNotification:(NSNotification *)notification{
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
-    NSString *peerDisplayName = peerID.displayName;
+
     MCSessionState state = [[[notification userInfo] objectForKey:@"state"] intValue];
     
     if (state == MCSessionStateConnecting) {
@@ -113,8 +114,8 @@
             [_Alert setMessage:@"正在连接中..."];
         });
     }else if (state == MCSessionStateConnected) {
-        if(![_DevicesArray containsObject:peerDisplayName]){
-            [_DevicesArray addObject:peerDisplayName];
+        if(![_DevicesArray containsObject:peerID.displayName]){
+            [_DevicesArray addObject:peerID.displayName];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [_DevicesTable reloadData];

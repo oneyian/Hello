@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MultipeerConnectivity/MultipeerConnectivity.h>
 
-@interface HomeViewController : UIViewController <MCBrowserViewControllerDelegate>
 
--(void)peerDidChangeStateWithNotification:(NSNotification *)notification;
+@interface HomeViewController : UIViewController 
 
 @end
 
