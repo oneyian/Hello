@@ -94,12 +94,13 @@
     [self presentViewController:_Alert animated:YES completion:nil];
 }
 -(void)client:(UIButton*)sender{
-    [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
-    [_appDelegate.mcManager advertiseSelf:YES];
-    
-    [[_appDelegate mcManager] setupMCBrowser];
-    [[[_appDelegate mcManager] browser] setDelegate:self];
-    [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+    [self PresentMessageController];
+//    [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
+//    [_appDelegate.mcManager advertiseSelf:YES];
+//    
+//    [[_appDelegate mcManager] setupMCBrowser];
+//    [[[_appDelegate mcManager] browser] setDelegate:self];
+//    [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
 }
 #pragma mark ##### 连接状态 #####
 -(void)peerDidChangeStateWithNotification:(NSNotification *)notification{
