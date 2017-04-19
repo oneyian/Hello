@@ -9,10 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface ToolView : UIView
+
 /** 相机 */
 @property (nonatomic,strong) UIButton * camera;
 /** 图片 */
 @property (nonatomic,strong) UIButton * image;
 /** 表情 */
 @property (nonatomic,strong) UIButton * expression;
+/** 文件 */
+@property (nonatomic,strong) UIButton * files;
+
 @end

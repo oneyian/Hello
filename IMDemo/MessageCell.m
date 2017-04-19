@@ -16,7 +16,6 @@
 
 +(instancetype)cellWithTableView:(UITableView*)tableView dataWithModel:(MessageModel*)model{
     CGSize size= [self sizeWithString:model.message];
-    UIImage *image=[UIImage new];
     
     if (model.type==MessageTypeMe) {
         MessageCell *Cell=[tableView dequeueReusableCellWithIdentifier:@"myself"];
@@ -26,13 +25,11 @@
         [Cell setBackgroundColor:tableView.backgroundColor];
         Cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        image=[UIImage imageNamed:@"chat_send_nor"];
-        image=[image stretchableImageWithLeftCapWidth:image.size.width/2 topCapHeight:image.size.height/2];
-        
         Cell.mymessage.frame=CGRectMake(Width-size.width-70, 20, size.width+40, size.height+40);
         Cell.myself.frame=CGRectMake(Width-size.width-50, 40, size.width, size.height);
         
-        Cell.mymessage.image=image;
+        Cell.mymessage.image=[UIImage imageNamed:@"chat_send_dim"];
+        Cell.mymessage.image=[Cell.mymessage.image stretchableImageWithLeftCapWidth:Cell.mymessage.image.size.width/2 topCapHeight:Cell.mymessage.image.size.height/2];
         Cell.myname.text=model.name;
         Cell.myself.text=model.message;
         return Cell;
@@ -43,14 +40,12 @@
         }
         [Cell setBackgroundColor:tableView.backgroundColor];
         Cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        image=[UIImage imageNamed:@"chat_recive_nor"];
-        image=[image stretchableImageWithLeftCapWidth:image.size.width/2 topCapHeight:image.size.height/2];
 
         Cell.othermessage.frame=CGRectMake(30, 20, size.width+40, size.height+40);
         Cell.other.frame=CGRectMake(50, 40, size.width, size.height);
         
-        Cell.othermessage.image =image;
+        Cell.othermessage.image = [UIImage imageNamed:@"chat_recive_nor"];
+        Cell.othermessage.image=[Cell.othermessage.image stretchableImageWithLeftCapWidth:Cell.othermessage.image.size.width/2 topCapHeight:Cell.othermessage.image.size.height/2];
         Cell.othername.text=model.name;
         Cell.other.text=model.message;
         return Cell;

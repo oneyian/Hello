@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="chat_send_nor" translatesAutoresizingMaskIntoConstraints="NO" id="hiT-Pa-CFt">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hiT-Pa-CFt">
                         <rect key="frame" x="10" y="35" width="300" height="38"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -98,7 +98,4 @@
             <point key="canvasLocation" x="-494" y="124"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="chat_send_nor" width="64" height="56"/>
-    </resources>
 </document>

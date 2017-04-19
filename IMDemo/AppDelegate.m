@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "LoadViewController.h"
 #import "HomeViewController.h"
 
 @interface AppDelegate ()
@@ -15,18 +16,26 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [NSThread sleepForTimeInterval:0.66];//设置启动页面时间
     _mcManager=[[MCManager alloc]init];
-    
-    HomeViewController *Home=[HomeViewController new];
-    UINavigationController *Navigation=[[UINavigationController alloc]initWithRootViewController:Home];
     
     _window=[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [_window makeKeyAndVisible];
-    [_window setRootViewController:Navigation];
     
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"username"]==NULL
+        ||[[[NSUserDefaults standardUserDefaults] objectForKey:@"username"] isEqualToString:@""]) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"username"];
+        LoadViewController *Load=[LoadViewController new];
+        [_window setRootViewController:Load];
+        
+//        HomeViewController *Home=[HomeViewController new];
+//        [_window setRootViewController:Home];
+    }else{
+        HomeViewController *Home=[HomeViewController new];
+        [_window setRootViewController:Home];
+    }
     return YES;
 }
 

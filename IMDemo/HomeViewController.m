@@ -14,11 +14,12 @@
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
 
-@interface HomeViewController ()<UITableViewDelegate,UITableViewDataSource,MCBrowserViewControllerDelegate>
+@interface HomeViewController ()<MCBrowserViewControllerDelegate>
 
 @property (nonatomic,strong) AppDelegate * appDelegate;
-@property (nonatomic,strong) UITableView * DevicesTable;
+
 @property (nonatomic,strong) NSMutableArray * DevicesArray;
+
 @property (nonatomic,strong) UIAlertController *Alert;
 
 @end
@@ -32,13 +33,15 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationItem setTitle:@"Hello"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    UIImageView *BackgroundView=[[UIImageView alloc]initWithFrame:self.view.bounds];
+    BackgroundView.image=[UIImage imageNamed:@"nowlive_room_default_bkg"];
+    [self.view addSubview:BackgroundView];
+    
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerDidChangeStateWithNotification:) name:@"MCDidChangeStateNotification" object:nil];
-    
-    [self CreatTable];
     
     [self CreatButton];
     
@@ -71,15 +74,6 @@
     [Client setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [self.view addSubview:Client];
 }
--(void)CreatTable{
-    self.automaticallyAdjustsScrollViewInsets = NO;//关闭布局
-    _DevicesTable=[[UITableView alloc]initWithFrame:CGRectMake(0, Height/2+190, Width, Height-Height/2+190) style:UITableViewStylePlain];
-    _DevicesTable.separatorStyle=UITableViewCellSeparatorStyleNone;
-    _DevicesTable.backgroundColor=[UIColor groupTableViewBackgroundColor];
-    [_DevicesTable setDelegate:self];
-    [_DevicesTable setDataSource:self];
-    [self.view addSubview:_DevicesTable];
-}
 #pragma mark ##### 控件实现区 #####
 -(void)server:(UIButton*)sender{
     [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
@@ -90,7 +84,6 @@
         [[_appDelegate mcManager] advertiseSelf:NO];
         [_appDelegate.mcManager.session disconnect];
         [_DevicesArray removeAllObjects];
-        [_DevicesTable reloadData];
     }]];
     [self presentViewController:_Alert animated:YES completion:nil];
 }
@@ -118,7 +111,6 @@
             [_DevicesArray addObject:peerID.displayName];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_DevicesTable reloadData];
             [_Alert setTitle:@"连接成功"];
             [_Alert setMessage:@"是否进入房间？"];
             [_Alert addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -134,7 +126,6 @@
                     [[_appDelegate mcManager] advertiseSelf:NO];
                     [_appDelegate.mcManager.session disconnect];
                     [_DevicesArray removeAllObjects];
-                    [_DevicesTable reloadData];
                 }]];
                 [self presentViewController:NotConnect animated:YES completion:nil];
             });
@@ -153,29 +144,9 @@
         [[_appDelegate mcManager] advertiseSelf:NO];
         [_appDelegate.mcManager.session disconnect];
         [_DevicesArray removeAllObjects];
-        [_DevicesTable reloadData];
         [_appDelegate.mcManager.browser dismissViewControllerAnimated:YES completion:nil];
     }]];
     [_appDelegate.mcManager.browser presentViewController:Cancelled animated:YES completion:nil];
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.DevicesArray.count;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 30;
-}
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"id"];
-    if (!cell) {
-        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];
-    }
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    cell.textLabel.layer.borderWidth = 1;
-    cell.textLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    cell.textLabel.layer.cornerRadius=10;
-    cell.textLabel.textAlignment=NSTextAlignmentCenter;
-    cell.textLabel.text=_DevicesArray[indexPath.row];
-    return cell;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -23,14 +23,9 @@
         [self addSubview:_textView];
         
         //键盘工具条
-        UIToolbar *Tool=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 35)];
-        Tool.barStyle=UIBarStyleDefault;
-        UIBarButtonItem *bt1=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        UIBarButtonItem *bt2=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        UIBarButtonItem *done=[[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
-        done.tintColor=[UIColor brownColor];
-        [Tool setItems:@[bt1,bt2,done]];
-        [_textView setInputAccessoryView:Tool];
+        _ToolBar=[[KeyBoardBar alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 35)];
+        [_ToolBar setKeyboardDelegate:self];
+        [_textView setInputAccessoryView:_ToolBar];
     }
     return self;
 }
