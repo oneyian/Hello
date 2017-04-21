@@ -12,12 +12,12 @@
 #import "MessageModel.h"
 #import "TextView.h"
 #import "ToolView.h"
-#import "HeaderBar.h"
+#import "NavigationBar.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
 
-@interface MessageController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate>
+@interface MessageController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,NavigationBarDelegate>
 @property (nonatomic, strong) AppDelegate *appDelegate;
 
 @property (nonatomic,strong) UITableView * MessageTable;
@@ -26,8 +26,8 @@
 @property (nonatomic,assign) CGFloat OldY;
 @property (nonatomic,assign) CGFloat NewHeight;
 @property (nonatomic,assign) CGRect KeyBoardFrame;
-/** 各部分View */
-@property (nonatomic,strong) HeaderBar * HeaderBar;
+
+@property (nonatomic,strong) NavigationBar * HeaderBar;
 @property (nonatomic,strong) TextView * TextView;
 @property (nonatomic,strong) ToolView * ToolView;
 @end
@@ -66,8 +66,13 @@
 -(void)CreatUIView{
     self.automaticallyAdjustsScrollViewInsets = NO;//关闭布局
     
-    _HeaderBar=[[HeaderBar alloc]initWithFrame:CGRectMake(0, 0, Width, 64)];
-    [_HeaderBar.menu addTarget:self action:@selector(menu:) forControlEvents:UIControlEventTouchUpInside];
+    _HeaderBar=[[NavigationBar alloc]initWithFrame:CGRectMake(0, 0,Width , 64)];
+    [_HeaderBar.menu setImage:[UIImage imageNamed:@"mulchat_header_icon_group"] forState:UIControlStateNormal];
+    [_HeaderBar.menu setFrame:CGRectMake(Width-40, 25, 30, 30)];
+    [_HeaderBar setBackgroundImage:[UIImage imageNamed:@"nowlive_room_default_bkg"] forBarMetrics:UIBarMetricsDefault];
+    _HeaderBar.title.text=@"Hello";
+    [_HeaderBar.title setTextColor:[UIColor whiteColor]];
+    [_HeaderBar setNavigationBarDalegate:self];
     [self.view addSubview:_HeaderBar];
     
     _MessageTable=[[UITableView alloc]initWithFrame:CGRectMake(0,64, Width, Height-64-85.5) style:UITableViewStylePlain];
@@ -97,10 +102,14 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_MessageArray.count - 1 inSection:0];
     [_MessageTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
--(void)menu:(UIButton*)sender{
+-(void)back:(UIButton *)back{
     [[_appDelegate mcManager] advertiseSelf:NO];
     [_appDelegate.mcManager.session disconnect];
+    [_DevicesArray removeAllObjects];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+-(void)menu:(UIButton *)menu{
+    
 }
 -(void)image:(UIButton*)image{
     
@@ -250,6 +259,11 @@
         [_MessageTable reloadData];
         [self ShowFootCell];
     });
+}
+#pragma mark ##### 拉伸图片 #####
+-(UIImage*)imageWithimage:(UIImage*)image{
+    image=[image stretchableImageWithLeftCapWidth:image.size.width/2 topCapHeight:image.size.height/2];
+    return image;
 }
 /*
  #pragma mark - Navigation

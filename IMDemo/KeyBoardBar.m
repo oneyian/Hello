@@ -18,15 +18,14 @@
         _centers=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         
         _right=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"chat_bottom_keyboard_nor"] style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
+        [_right setTintColor:[UIColor grayColor]];
         
         [self setItems:@[_left,_centers,_right]];
     }
     return self;
 }
 -(void)done:(UIBarButtonItem*)done{
-    if ([_keyboardDelegate respondsToSelector:@selector(done:)]) {
-        [_keyboardDelegate done:done];
-    }
+    [_keyboardDelegate done:done];
 }
 /*
 // Only override drawRect: if you perform custom drawing.

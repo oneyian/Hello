@@ -26,12 +26,8 @@
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"username"]==NULL
         ||[[[NSUserDefaults standardUserDefaults] objectForKey:@"username"] isEqualToString:@""]) {
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"username"];
         LoadViewController *Load=[LoadViewController new];
         [_window setRootViewController:Load];
-        
-//        HomeViewController *Home=[HomeViewController new];
-//        [_window setRootViewController:Home];
     }else{
         HomeViewController *Home=[HomeViewController new];
         [_window setRootViewController:Home];

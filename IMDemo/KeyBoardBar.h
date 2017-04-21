@@ -10,6 +10,7 @@
 
 @protocol KeyBoardBarDelegate <NSObject>
 
+@optional
 -(void)done:(UIBarButtonItem*)done;
 
 @end

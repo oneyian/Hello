@@ -9,6 +9,8 @@
 #import "LoadViewController.h"
 #import "PromptView.h"
 #import "GetNameView.h"
+#import "HeaderImageController.h"
+#import "HomeViewController.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
@@ -33,22 +35,28 @@
     [self loadPromptView];
     [self loadGetNameView];
     
+    UIImageView *phone=[[UIImageView alloc]initWithFrame:CGRectMake(Width/4, Height-50, Width/2, 30)];
+    [phone setContentMode:UIViewContentModeScaleAspectFit];
+    phone.image=[UIImage imageNamed:@"mulAccount_foreground"];
+    [self.view addSubview:phone];
     
     // Do any additional setup after loading the view.
 }
 -(void)loadPromptView{
     _Prompt=[[PromptView alloc]initWithFrame:CGRectMake(0, 0, Width, Height/3.6)];
-    [self.view addSubview:_Prompt];
-    
     [_Prompt.messagePrompt addTarget:self action:@selector(messagePrompt:) forControlEvents:UIControlEventTouchUpInside];
-    
     _Prompt.message.text=@"您和其他用户在同一局域网环境下（WIFI/蓝牙），即可享受免流量聊天，传输文件等功能哦~";
+    [self.view addSubview:_Prompt];
 }
 -(void)loadGetNameView{
     _GetName=[[GetNameView alloc]initWithFrame:CGRectMake(0, Height/3.6, Width, Height/3)];
+    [_GetName.NameView addTarget:self action:@selector(nameview:) forControlEvents:UIControlEventTouchUpInside];
+    [_GetName.GetName addTarget:self action:@selector(getname:) forControlEvents:UIControlEventTouchUpInside];
+    _GetName.NameText.borderStyle = UITextBorderStyleRoundedRect;
     [self.view addSubview:_GetName];
     
-    _GetQQName=[[UIButton alloc]initWithFrame:CGRectMake((Width-60)/2, Height-110,60, 60)];
+    _GetQQName=[[UIButton alloc]initWithFrame:CGRectMake((Width-50)/2, Height-110,50, 50)];
+    [_GetQQName addTarget:self action:@selector(getqqname:) forControlEvents:UIControlEventTouchUpInside];
     [_GetQQName setBackgroundImage:[UIImage imageNamed:@"QQ"] forState:UIControlStateNormal];
     [self.view addSubview:_GetQQName];
 }
@@ -69,6 +77,32 @@
         messagePrompt.selected=!messagePrompt.selected;
     }
 }
+-(void)nameview:(UIButton*)nameview{
+    HeaderImageController *Header=[HeaderImageController new];
+    Header.modalTransitionStyle=UIModalTransitionStyleCoverVertical;
+    [self presentViewController:Header animated:YES completion:nil];
+}
+-(void)getname:(UIButton*)getname{
+    if ([_GetName.NameText.text isEqualToString:@""]) {
+        _GetName.NameText.text=@"新晋游客";
+    }else{
+        [[NSUserDefaults standardUserDefaults] setObject:_GetName.NameText.text forKey:@"username"];
+        HomeViewController *Home=[HomeViewController new];
+        
+        if (self.presentingViewController==Home) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }else{
+            Home.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
+            [self presentViewController:Home animated:YES completion:nil];
+        }
+    }
+}
+-(void)getqqname:(UIButton*)getqqname{
+
+}
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

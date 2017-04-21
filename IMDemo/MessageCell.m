@@ -28,8 +28,7 @@
         Cell.mymessage.frame=CGRectMake(Width-size.width-70, 20, size.width+40, size.height+40);
         Cell.myself.frame=CGRectMake(Width-size.width-50, 40, size.width, size.height);
         
-        Cell.mymessage.image=[UIImage imageNamed:@"chat_send_dim"];
-        Cell.mymessage.image=[Cell.mymessage.image stretchableImageWithLeftCapWidth:Cell.mymessage.image.size.width/2 topCapHeight:Cell.mymessage.image.size.height/2];
+        Cell.mymessage.image=[self imageWithimage:[UIImage imageNamed:@"chat_send_dim"]];
         Cell.myname.text=model.name;
         Cell.myself.text=model.message;
         return Cell;
@@ -44,8 +43,7 @@
         Cell.othermessage.frame=CGRectMake(30, 20, size.width+40, size.height+40);
         Cell.other.frame=CGRectMake(50, 40, size.width, size.height);
         
-        Cell.othermessage.image = [UIImage imageNamed:@"chat_recive_nor"];
-        Cell.othermessage.image=[Cell.othermessage.image stretchableImageWithLeftCapWidth:Cell.othermessage.image.size.width/2 topCapHeight:Cell.othermessage.image.size.height/2];
+        Cell.othermessage.image = [self imageWithimage:[UIImage imageNamed:@"chat_recive_nor"]];
         Cell.othername.text=model.name;
         Cell.other.text=model.message;
         return Cell;
@@ -55,6 +53,11 @@
 +(CGSize)sizeWithString:(NSString*)string{
     CGSize size = [string boundingRectWithSize:CGSizeMake(Width-100, Height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]} context:nil].size;
     return size;
+}
+#pragma mark ##### 拉伸图片 #####
++(UIImage*)imageWithimage:(UIImage*)image{
+    image=[image stretchableImageWithLeftCapWidth:image.size.width/2 topCapHeight:image.size.height/2];
+    return image;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

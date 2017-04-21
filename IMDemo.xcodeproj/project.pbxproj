@@ -25,8 +25,10 @@
 		15952D341EA6520D00F1F23F /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 15952D331EA6520D00F1F23F /* MessageModel.m */; };
 		159950EA1EA7926100BD67E5 /* KeyBoardBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 159950E91EA7926100BD67E5 /* KeyBoardBar.m */; };
 		15B94DC81EA7139500CC88E3 /* PromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B94DC71EA7139500CC88E3 /* PromptView.m */; };
+		15B9B0601EA7B3B700C839EC /* HeaderImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B9B05F1EA7B3B700C839EC /* HeaderImageController.m */; };
 		15E4B24A1EA0671200A67CDE /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */; };
 		15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E4B24C1EA078C300A67CDE /* MCManager.m */; };
+		15F6DD211EA83A4100ED3098 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F6DD201EA83A4100ED3098 /* NavigationBar.m */; };
 		15FF90D81EA1ABBF00AF2B1A /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FF90D71EA1ABBF00AF2B1A /* MessageController.m */; };
 /* End PBXBuildFile section */
 
@@ -83,9 +85,13 @@
 		159950E91EA7926100BD67E5 /* KeyBoardBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyBoardBar.m; sourceTree = "<group>"; };
 		15B94DC61EA7139500CC88E3 /* PromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromptView.h; sourceTree = "<group>"; };
 		15B94DC71EA7139500CC88E3 /* PromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromptView.m; sourceTree = "<group>"; };
+		15B9B05E1EA7B3B700C839EC /* HeaderImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderImageController.h; sourceTree = "<group>"; };
+		15B9B05F1EA7B3B700C839EC /* HeaderImageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderImageController.m; sourceTree = "<group>"; };
 		15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		15E4B24B1EA078C300A67CDE /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
 		15E4B24C1EA078C300A67CDE /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
+		15F6DD1F1EA83A4100ED3098 /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
+		15F6DD201EA83A4100ED3098 /* NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBar.m; sourceTree = "<group>"; };
 		15FF90D61EA1ABBF00AF2B1A /* MessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageController.h; sourceTree = "<group>"; };
 		15FF90D71EA1ABBF00AF2B1A /* MessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,12 +146,14 @@
 		150741AA1EA0636600E24A1D /* IMDemo */ = {
 			isa = PBXGroup;
 			children = (
-				150741AE1EA0636600E24A1D /* AppDelegate.h */,
-				150741AF1EA0636600E24A1D /* AppDelegate.m */,
 				159950E81EA7926100BD67E5 /* KeyBoardBar.h */,
 				159950E91EA7926100BD67E5 /* KeyBoardBar.m */,
+				15F6DD1F1EA83A4100ED3098 /* NavigationBar.h */,
+				15F6DD201EA83A4100ED3098 /* NavigationBar.m */,
 				157BE4AD1EA62A17007F3B2F /* HomeViewController */,
 				1586BAF51EA6173A0083F897 /* MessageController */,
+				150741AE1EA0636600E24A1D /* AppDelegate.h */,
+				150741AF1EA0636600E24A1D /* AppDelegate.m */,
 				150741B41EA0636600E24A1D /* Main.storyboard */,
 				150741B71EA0636600E24A1D /* Assets.xcassets */,
 				150741B91EA0636600E24A1D /* LaunchScreen.storyboard */,
@@ -221,7 +229,7 @@
 		159EEA711EA11BEB0013CD8C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				15B94DC51EA7135700CC88E3 /* LoadView */,
+				15B94DC51EA7135700CC88E3 /* PromptView */,
 				151431CB1EA78E040013A45C /* GetName */,
 			);
 			name = View;
@@ -230,6 +238,8 @@
 		159EEA721EA11BF10013CD8C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				15B9B05E1EA7B3B700C839EC /* HeaderImageController.h */,
+				15B9B05F1EA7B3B700C839EC /* HeaderImageController.m */,
 				150B4DDC1EA6E8CF00BEC069 /* LoadViewController.h */,
 				150B4DDD1EA6E8CF00BEC069 /* LoadViewController.m */,
 				150741B11EA0636600E24A1D /* HomeViewController.h */,
@@ -258,7 +268,10 @@
 		15A09A911EA71F3800E4F941 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				15F6DD241EA83A9900ED3098 /* NavigationBar */,
 				15B94DC21EA70CF900CC88E3 /* MessageView */,
+				15F6DD221EA83A6100ED3098 /* TextView */,
+				15F6DD231EA83A6900ED3098 /* ToolView */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -266,12 +279,6 @@
 		15B94DC21EA70CF900CC88E3 /* MessageView */ = {
 			isa = PBXGroup;
 			children = (
-				15952D291EA6481800F1F23F /* TextView.h */,
-				15952D2A1EA6481800F1F23F /* TextView.m */,
-				15952D2C1EA6482800F1F23F /* ToolView.h */,
-				15952D2D1EA6482800F1F23F /* ToolView.m */,
-				15952D2F1EA64F9700F1F23F /* HeaderBar.h */,
-				15952D301EA64F9700F1F23F /* HeaderBar.m */,
 				151D966A1EA0D92800CC880D /* MessageCell.h */,
 				151D966B1EA0D92800CC880D /* MessageCell.m */,
 				151D966C1EA0D92800CC880D /* MessageCell.xib */,
@@ -297,13 +304,13 @@
 			name = MCManager;
 			sourceTree = "<group>";
 		};
-		15B94DC51EA7135700CC88E3 /* LoadView */ = {
+		15B94DC51EA7135700CC88E3 /* PromptView */ = {
 			isa = PBXGroup;
 			children = (
 				15B94DC61EA7139500CC88E3 /* PromptView.h */,
 				15B94DC71EA7139500CC88E3 /* PromptView.m */,
 			);
-			name = LoadView;
+			name = PromptView;
 			sourceTree = "<group>";
 		};
 		15E4B2481EA0671200A67CDE /* Frameworks */ = {
@@ -312,6 +319,33 @@
 				15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		15F6DD221EA83A6100ED3098 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				15952D291EA6481800F1F23F /* TextView.h */,
+				15952D2A1EA6481800F1F23F /* TextView.m */,
+			);
+			name = TextView;
+			sourceTree = "<group>";
+		};
+		15F6DD231EA83A6900ED3098 /* ToolView */ = {
+			isa = PBXGroup;
+			children = (
+				15952D2C1EA6482800F1F23F /* ToolView.h */,
+				15952D2D1EA6482800F1F23F /* ToolView.m */,
+			);
+			name = ToolView;
+			sourceTree = "<group>";
+		};
+		15F6DD241EA83A9900ED3098 /* NavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				15952D2F1EA64F9700F1F23F /* HeaderBar.h */,
+				15952D301EA64F9700F1F23F /* HeaderBar.m */,
+			);
+			name = NavigationBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -456,6 +490,7 @@
 				151431CA1EA78DFD0013A45C /* GetNameView.m in Sources */,
 				150741B31EA0636600E24A1D /* HomeViewController.m in Sources */,
 				150B4DDE1EA6E8CF00BEC069 /* LoadViewController.m in Sources */,
+				15B9B0601EA7B3B700C839EC /* HeaderImageController.m in Sources */,
 				15B94DC81EA7139500CC88E3 /* PromptView.m in Sources */,
 				15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */,
 				150741B01EA0636600E24A1D /* AppDelegate.m in Sources */,
@@ -465,6 +500,7 @@
 				15952D341EA6520D00F1F23F /* MessageModel.m in Sources */,
 				15FF90D81EA1ABBF00AF2B1A /* MessageController.m in Sources */,
 				15952D311EA64F9700F1F23F /* HeaderBar.m in Sources */,
+				15F6DD211EA83A4100ED3098 /* NavigationBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
