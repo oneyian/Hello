@@ -25,12 +25,18 @@
         [Cell setBackgroundColor:tableView.backgroundColor];
         Cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        Cell.mymessage.frame=CGRectMake(Width-size.width-70, 20, size.width+40, size.height+40);
-        Cell.myself.frame=CGRectMake(Width-size.width-50, 40, size.width, size.height);
+        Cell.myself.frame=CGRectMake(Width-size.width-70, 45, size.width, size.height);
+        Cell.mymessage.frame=CGRectMake(Width-size.width-90, 25, size.width+40, size.height+40);
         
         Cell.mymessage.image=[self imageWithimage:[UIImage imageNamed:@"chat_send_dim"]];
         Cell.myname.text=model.name;
         Cell.myself.text=model.message;
+        /** 头像 */
+        NSString *PreferencePath = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSUserDomainMask, YES).firstObject;
+        NSString *Path = [PreferencePath stringByAppendingPathComponent:@"header.png"];
+        Cell.header.image=[UIImage imageWithContentsOfFile:Path];
+        [Cell.header.layer setCornerRadius:20];
+        [Cell.header setClipsToBounds:YES];
         return Cell;
     }else{
         MessageCell *Cell=[tableView dequeueReusableCellWithIdentifier:@"other"];
@@ -40,18 +46,21 @@
         [Cell setBackgroundColor:tableView.backgroundColor];
         Cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-        Cell.othermessage.frame=CGRectMake(30, 20, size.width+40, size.height+40);
-        Cell.other.frame=CGRectMake(50, 40, size.width, size.height);
+        Cell.other.frame=CGRectMake(70, 45, size.width, size.height);
+        Cell.othermessage.frame=CGRectMake(50, 25, size.width+40, size.height+40);
         
         Cell.othermessage.image = [self imageWithimage:[UIImage imageNamed:@"chat_recive_nor"]];
         Cell.othername.text=model.name;
         Cell.other.text=model.message;
+        Cell.headers.image=[UIImage imageNamed:model.image];
+        [Cell.headers.layer setCornerRadius:20];
+        [Cell.headers setClipsToBounds:YES];
         return Cell;
     }
 }
 #pragma mark ##### 计算Size #####
 +(CGSize)sizeWithString:(NSString*)string{
-    CGSize size = [string boundingRectWithSize:CGSizeMake(Width-100, Height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]} context:nil].size;
+    CGSize size = [string boundingRectWithSize:CGSizeMake(Width-123, Height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]} context:nil].size;
     return size;
 }
 #pragma mark ##### 拉伸图片 #####

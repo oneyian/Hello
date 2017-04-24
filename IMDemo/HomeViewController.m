@@ -40,6 +40,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self.DevicesArray removeAllObjects];
+    [_GetName.NameView setBackgroundImage:[_GetName setHeaderImage] forState:UIControlStateNormal];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,9 +53,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerDidChangeStateWithNotification:) name:@"MCDidChangeStateNotification" object:nil];
     
-    [self CreatButton];
     [self loadPromptView];
     [self loadGetNameView];
+    [self CreatButton];
     
     UIButton *logout=[[UIButton alloc]initWithFrame:CGRectMake(5, 20, 40, 40)];
     [logout setImage:[UIImage imageNamed:@"game_out"] forState:UIControlStateNormal];
@@ -74,7 +75,7 @@
     [_GetName.GetName setHidden:YES];
     
     UIImageView *textimage=[[UIImageView alloc]initWithFrame:CGRectMake(12.5, 95,Width-25, 45)];
-    textimage.image=[self imageWithimage:[UIImage imageNamed:@"qcall_chat_with_friend_normal"]];
+    textimage.image=[_GetName imageWithimage:[UIImage imageNamed:@"qcall_chat_with_friend_normal"]];
     [_GetName addSubview:textimage];
     [self.view addSubview:_GetName];
     
@@ -97,7 +98,7 @@
     [Server addTarget:self action:@selector(server:) forControlEvents:UIControlEventTouchUpInside];
     [Server setTitle:@"创建房间" forState:UIControlStateNormal];
     [Server setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
-    UIImage *serverImage=[self imageWithimage:[UIImage imageNamed:@"occupation_science_bg"]];
+    UIImage *serverImage=[_GetName imageWithimage:[UIImage imageNamed:@"occupation_science_bg"]];
     [Server setBackgroundImage:serverImage forState:UIControlStateNormal];
     [self.view addSubview:Server];
     
@@ -107,13 +108,17 @@
     [Client addTarget:self action:@selector(client:) forControlEvents:UIControlEventTouchUpInside];
     [Client setTitle:@"搜索房间" forState:UIControlStateNormal];
     [Client setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    UIImage *clientImage=[self imageWithimage:[UIImage imageNamed:@"occupation_business_bg"]];
+    UIImage *clientImage=[_GetName imageWithimage:[UIImage imageNamed:@"occupation_business_bg"]];
     [Client setBackgroundImage:clientImage forState:UIControlStateNormal];
     [self.view addSubview:Client];
 }
 #pragma mark ##### 控件实现区 #####
 -(void)logout:(UIButton*)logout{
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"username"];
+    NSString *PreferencePath = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *FilePath = [PreferencePath stringByAppendingPathComponent:@"header.png"];
+    [self dataWithImage:[UIImage imageNamed:@"default"] filePath:FilePath];
+    
     LoadViewController *Load=[LoadViewController new];
     if (self.presentingViewController==Load) {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -226,10 +231,19 @@
     }]];
     [_appDelegate.mcManager.browser presentViewController:Cancelled animated:YES completion:nil];
 }
-#pragma mark ##### 拉伸图片 #####
--(UIImage*)imageWithimage:(UIImage*)image{
-    image=[image stretchableImageWithLeftCapWidth:image.size.width/2 topCapHeight:image.size.height/2];
-    return image;
+-(void)dataWithImage:(UIImage*)image filePath:(NSString*)path{
+    /** image转data存储 */
+    NSData *data=[NSData new];
+    if (!UIImagePNGRepresentation(image)) {
+        data = UIImageJPEGRepresentation(image, 1);
+    }
+    else {
+        data = UIImagePNGRepresentation(image);
+    }
+    if (data) {
+        [data writeToFile:path atomically:YES];
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"image"];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

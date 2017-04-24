@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface MessageModel : NSObject
+/** 头像 */
+@property (nonatomic,strong) NSString * image;
 /** ID */
 @property (nonatomic,strong) NSString * name;
 /** 用户类型 */

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>default</string>
+	<string>aizi</string>
+	<string>banzang</string>
+	<string>banzang1</string>
+	<string>banzang2</string>
+	<string>baolei</string>
+	<string>chixu</string>
+	<string>chixu1</string>
+	<string>dachui</string>
+	<string>dachui1</string>
+	<string>faji</string>
+	<string>faji1</string>
+	<string>guafu</string>
+	<string>guafu1</string>
+	<string>heshang</string>
+	<string>heshang1</string>
+	<string>liekong</string>
+	<string>liekong1</string>
+	<string>liekong2</string>
+	<string>maidie</string>
+	<string>maomei</string>
+	<string>sishen</string>
+	<string>sishen1</string>
+	<string>tianshi</string>
+	<string>tianshi1</string>
+	<string>xiaomei</string>
+	<string>xingxing</string>
+	<string>xingxing1</string>
+	<string>zhu</string>
+	<string>zhu1</string>
+	<string>zhu2</string>
+</array>
+</plist>

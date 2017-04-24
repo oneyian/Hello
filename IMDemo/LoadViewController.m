@@ -24,7 +24,10 @@
 @end
 
 @implementation LoadViewController
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [_GetName.NameView setBackgroundImage:[_GetName setHeaderImage] forState:UIControlStateNormal];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -98,7 +101,12 @@
     }
 }
 -(void)getqqname:(UIButton*)getqqname{
-
+    
+    
+    
+    
+    
+    
 }
 
 

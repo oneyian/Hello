@@ -36,8 +36,8 @@
 -(NSMutableArray*)MessageArray{
     if (!_MessageArray) {
         _MessageArray=[NSMutableArray new];
-        NSDictionary *myself=[[NSDictionary alloc]initWithObjectsAndKeys:@"Me",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"0",@"type", nil];
-        NSDictionary *other=[[NSDictionary alloc]initWithObjectsAndKeys:@"Other",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"1",@"type", nil];
+        NSDictionary *myself=[[NSDictionary alloc]initWithObjectsAndKeys:@"Me",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"0",@"type",@"zhu",@"image", nil];
+        NSDictionary *other=[[NSDictionary alloc]initWithObjectsAndKeys:@"Other",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"1",@"type",@"zhu",@"image", nil];
         [_MessageArray addObject:myself];
         [_MessageArray addObject:other];
     }
@@ -69,6 +69,8 @@
     _HeaderBar=[[NavigationBar alloc]initWithFrame:CGRectMake(0, 0,Width , 64)];
     [_HeaderBar.menu setImage:[UIImage imageNamed:@"mulchat_header_icon_group"] forState:UIControlStateNormal];
     [_HeaderBar.menu setFrame:CGRectMake(Width-40, 25, 30, 30)];
+    [_HeaderBar.menu addTarget:self action:@selector(menu:) forControlEvents:UIControlEventTouchUpInside];
+    
     [_HeaderBar setBackgroundImage:[UIImage imageNamed:@"nowlive_room_default_bkg"] forBarMetrics:UIBarMetricsDefault];
     _HeaderBar.title.text=@"Hello";
     [_HeaderBar.title setTextColor:[UIColor whiteColor]];
@@ -91,6 +93,9 @@
     _ToolView=[[ToolView alloc]initWithFrame:CGRectMake(0, Height-50, Width, 50)];
     [_ToolView setBackgroundColor:self.view.backgroundColor];
     [_ToolView.image addTarget:self action:@selector(image:) forControlEvents:UIControlEventTouchUpInside];
+    [_ToolView.camera addTarget:self action:@selector(camera:) forControlEvents:UIControlEventTouchUpInside];
+    [_ToolView.expression addTarget:self action:@selector(expression:) forControlEvents:UIControlEventTouchUpInside];
+    [_ToolView.files addTarget:self action:@selector(files:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_ToolView];
     //监听键盘
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Showkeyboard:) name:UIKeyboardWillShowNotification object:nil];
@@ -109,10 +114,19 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)menu:(UIButton *)menu{
-    
+    NSLog(@"菜单");
 }
 -(void)image:(UIButton*)image{
-    
+    NSLog(@"图片");
+}
+-(void)camera:(UIButton*)camera{
+    NSLog(@"相机");
+}
+-(void)expression:(UIButton*)expression{
+    NSLog(@"表情");
+}
+-(void)files:(UIButton*)files{
+    NSLog(@"文件");
 }
 - (void)Showkeyboard:(NSNotification *)notification{
     _KeyBoardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -225,12 +239,18 @@
     if ([text isEqualToString:@"\n"]){
         if (![_TextView.textView.text isEqualToString:@""]) {
             
-            NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:_appDelegate.mcManager.peerID.displayName,@"name",_TextView.textView.text,@"message",@"0",@"type", nil];
+            NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
+                                       _appDelegate.mcManager.peerID.displayName,@"name",
+                                       _TextView.textView.text,@"message",
+                                       @"0",@"type",
+                                       [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
+                                       nil];
+            
             [_MessageArray addObject:messageData];
             [_MessageTable reloadData];
             [self ShowFootCell];
-            
-            NSData *dataToSend = [_TextView.textView.text dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *dataString=[NSString stringWithFormat:@"%@[/;]%@",_TextView.textView.text,[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
+            NSData *dataToSend = [dataString dataUsingEncoding:NSUTF8StringEncoding];
             NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
             NSError *error;
             
@@ -250,10 +270,17 @@
 #pragma mark ##### 数据接收 #####
 -(void)didReceiveDataWithNotification:(NSNotification *)notification{
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
-    NSData *receivedData = [[notification userInfo] objectForKey:@"data"];
-    NSString *receivedText = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
+    NSData *Data = [[notification userInfo] objectForKey:@"data"];
+    NSString *dataText = [[NSString alloc] initWithData:Data encoding:NSUTF8StringEncoding];
+    NSArray *dataArray=[dataText componentsSeparatedByString:@"[/;]"];
+
+    NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
+                               peerID.displayName,@"name",
+                               dataArray[0],@"message",
+                               @"1",@"type",
+                               dataArray[1],@"image",
+                               nil];
     
-    NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:peerID.displayName,@"name",receivedText,@"message",@"1",@"type", nil];
     [_MessageArray addObject:messageData];
     dispatch_async(dispatch_get_main_queue(), ^{
         [_MessageTable reloadData];

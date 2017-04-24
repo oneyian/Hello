@@ -18,5 +18,5 @@
 @property (nonatomic,strong) UIButton * messagePrompt;
 
 +(CGSize)sizeWithString:(NSString*)string;
-
+-(UIImage*)imageWithimage:(UIImage*)image;
 @end

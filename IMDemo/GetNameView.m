@@ -15,6 +15,7 @@
     if (self) {
         _NameView=[[UIButton alloc]initWithFrame:CGRectMake((self.frame.size.width-80)/2, 0, 80, 80)];
         [_NameView.layer setCornerRadius:40];
+        [_NameView setClipsToBounds:YES];
         [_NameView setBackgroundImage:[self setHeaderImage] forState:UIControlStateNormal];
         [self addSubview:_NameView];
         
@@ -62,6 +63,7 @@
     
     if (!Headerimage) {
         Headerimage=[UIImage imageNamed:@"default"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"default" forKey:@"image"];
         /** image转data */
         NSData *data=[NSData new];
         if (!UIImagePNGRepresentation(Headerimage)) {

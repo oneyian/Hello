@@ -18,5 +18,6 @@
 @property (nonatomic,strong) UITextField * NameText;
 /** 用户登陆 */
 @property (nonatomic,strong) UIButton * GetName;
-
+-(UIImage*)setHeaderImage;
+-(UIImage*)imageWithimage:(UIImage*)image;
 @end

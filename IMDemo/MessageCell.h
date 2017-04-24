@@ -16,10 +16,15 @@ typedef enum {
 
 @interface MessageCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *header;
 @property (weak, nonatomic) IBOutlet UILabel *myname;
 @property (weak, nonatomic) IBOutlet UIImageView *mymessage;
 @property (weak, nonatomic) IBOutlet UILabel *myself;
 
+
+
+
+@property (weak, nonatomic) IBOutlet UIImageView *headers;
 @property (weak, nonatomic) IBOutlet UILabel *othername;
 @property (weak, nonatomic) IBOutlet UIImageView *othermessage;
 @property (weak, nonatomic) IBOutlet UILabel *other;
