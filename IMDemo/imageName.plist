@@ -3,17 +3,18 @@
 <plist version="1.0">
 <array>
 	<string>default</string>
+	<string>banzang2</string>
+	<string>faji1</string>
+	<string>zhu2</string>
+	<string>dva</string>
 	<string>aizi</string>
 	<string>banzang</string>
 	<string>banzang1</string>
-	<string>banzang2</string>
 	<string>baolei</string>
 	<string>chixu</string>
 	<string>chixu1</string>
 	<string>dachui</string>
-	<string>dachui1</string>
 	<string>faji</string>
-	<string>faji1</string>
 	<string>guafu</string>
 	<string>guafu1</string>
 	<string>heshang</string>
@@ -32,6 +33,5 @@
 	<string>xingxing1</string>
 	<string>zhu</string>
 	<string>zhu1</string>
-	<string>zhu2</string>
 </array>
 </plist>
