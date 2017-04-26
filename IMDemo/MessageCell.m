@@ -8,6 +8,7 @@
 
 #import "MessageCell.h"
 #import "MessageModel.h"
+#import "Utility.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
@@ -30,7 +31,9 @@
         
         Cell.mymessage.image=[self imageWithimage:[UIImage imageNamed:@"chat_send_dim"]];
         Cell.myname.text=model.name;
-        Cell.myself.text=model.message;
+        
+        Cell.myself.attributedText=[Utility emotionStrWithString:model.message];
+        //Cell.myself.text=model.message;
         /** 头像 */
         NSString *PreferencePath = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSUserDomainMask, YES).firstObject;
         NSString *Path = [PreferencePath stringByAppendingPathComponent:@"header.png"];
@@ -51,7 +54,7 @@
         
         Cell.othermessage.image = [self imageWithimage:[UIImage imageNamed:@"chat_recive_nor"]];
         Cell.othername.text=model.name;
-        Cell.other.text=model.message;
+        Cell.other.attributedText=[Utility emotionStrWithString:model.message];
         Cell.headers.image=[UIImage imageNamed:model.image];
         [Cell.headers.layer setCornerRadius:20];
         [Cell.headers setClipsToBounds:YES];

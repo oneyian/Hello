@@ -61,6 +61,27 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
+#pragma mark ##### 表情Plist文件 #####
+//NSString *DocumentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+//DocumentPath =[DocumentPath stringByAppendingPathComponent:@"emoji.plist"];
+//NSMutableArray *emojiArray=[NSMutableArray new];
+//
+//
+//for (int i=1; i<=184; i++) {
+//    if (i<10) {
+//        NSMutableDictionary *emojiDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"[00%d]",i],@"cht",[NSString stringWithFormat:@"00%d",i],@"png", nil];
+//        [emojiArray addObject:emojiDict];
+//    }else if (i<100){
+//        NSMutableDictionary *emojiDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"[0%d]",i],@"cht",[NSString stringWithFormat:@"0%d",i],@"png", nil];
+//        [emojiArray addObject:emojiDict];
+//    }
+//    else if (i>120 && i<143){ }
+//    else{
+//        NSMutableDictionary *emojiDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"[%d]",i],@"cht",[NSString stringWithFormat:@"%d",i],@"png", nil];
+//        [emojiArray addObject:emojiDict];
+//    }
+//}
+//[emojiArray writeToFile:DocumentPath atomically:YES];
+//NSLog(@"%@",DocumentPath);
 
 @end

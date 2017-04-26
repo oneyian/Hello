@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Expression : UIView
+@protocol ExpDelegate <NSObject>
+
+-(void)didSelectExp:(NSString*)exp;
+
+@end
+
+
+@interface Expression : UIView <UICollectionViewDelegate,UICollectionViewDataSource>
+
+@property (nonatomic,strong)id<ExpDelegate> expDelegate;
+@property (nonatomic,strong) UICollectionView * ExpCollection;
+@property (nonatomic,strong) NSMutableArray * ExpArray;
 
 @end

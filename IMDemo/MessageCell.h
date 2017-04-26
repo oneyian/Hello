@@ -33,4 +33,5 @@ typedef enum {
 
 +(CGSize)sizeWithString:(NSString*)string;
 +(UIImage*)imageWithimage:(UIImage*)image;
+
 @end

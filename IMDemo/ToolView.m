@@ -14,22 +14,22 @@
     if (self) {
         _image=[[UIButton alloc]initWithFrame:CGRectMake(10, 7.5, 35, 35)];
         [_image setImage:[UIImage imageNamed:@"chat_bottom_photo_nor"] forState:UIControlStateNormal];
-        [_image setImage:[UIImage imageNamed:@"chat_bottom_photo_press"] forState:UIControlStateHighlighted];
+        [_image setImage:[UIImage imageNamed:@"chat_bottom_photo_press"] forState:UIControlStateSelected];
         [self addSubview:_image];
         
         _camera=[[UIButton alloc]initWithFrame:CGRectMake((self.frame.size.width-160)/3+45, 7.5, 35, 35)];
         [_camera setImage:[UIImage imageNamed:@"chat_bottom_Camera_nor"] forState:UIControlStateNormal];
-        [_camera setImage:[UIImage imageNamed:@"chat_bottom_Camera_press"] forState:UIControlStateHighlighted];
+        [_camera setImage:[UIImage imageNamed:@"chat_bottom_Camera_press"] forState:UIControlStateSelected];
         [self addSubview:_camera];
         
         _files=[[UIButton alloc]initWithFrame:CGRectMake((self.frame.size.width-160)/3*2+80, 7.5, 35, 35)];
         [_files setImage:[UIImage imageNamed:@"chat_bottom_file_nor"] forState:UIControlStateNormal];
-        [_files setImage:[UIImage imageNamed:@"chat_bottom_file_pressed"] forState:UIControlStateHighlighted];
+        [_files setImage:[UIImage imageNamed:@"chat_bottom_file_pressed"] forState:UIControlStateSelected];
         [self addSubview:_files];
         
         _expression=[[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width-45, 7.5, 35, 35)];
         [_expression setImage:[UIImage imageNamed:@"chat_bottom_emotion_nor"] forState:UIControlStateNormal];
-        [_expression setImage:[UIImage imageNamed:@"chat_bottom_emotion_press"] forState:UIControlStateHighlighted];
+        [_expression setImage:[UIImage imageNamed:@"chat_bottom_emotion_press"] forState:UIControlStateSelected];
         [self addSubview:_expression];
     }
     return self;

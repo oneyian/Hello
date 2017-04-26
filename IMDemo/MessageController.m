@@ -13,12 +13,18 @@
 #import "TextView.h"
 #import "ToolView.h"
 #import "NavigationBar.h"
+#import "Expression.h"
+#import "MyNSText.h"
+#import "NSAttributedString+MyNSAttributedString.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
-
-@interface MessageController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,NavigationBarDelegate>
-@property (nonatomic, strong) AppDelegate *appDelegate;
+typedef enum {
+    DataTypeText = 0, // 文字
+    DataTypeImage   // 图片
+} DataType;
+@interface MessageController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,NavigationBarDelegate,ExpDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@property (nonatomic,strong) AppDelegate *appDelegate;
 
 @property (nonatomic,strong) UITableView * MessageTable;
 @property (nonatomic,strong) NSMutableArray * MessageArray;
@@ -30,6 +36,7 @@
 @property (nonatomic,strong) NavigationBar * HeaderBar;
 @property (nonatomic,strong) TextView * TextView;
 @property (nonatomic,strong) ToolView * ToolView;
+@property (nonatomic,strong) Expression * ExpresView;
 @end
 
 @implementation MessageController
@@ -37,7 +44,7 @@
     if (!_MessageArray) {
         _MessageArray=[NSMutableArray new];
         NSDictionary *myself=[[NSDictionary alloc]initWithObjectsAndKeys:@"Me",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"0",@"type",@"zhu",@"image", nil];
-        NSDictionary *other=[[NSDictionary alloc]initWithObjectsAndKeys:@"Other",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"1",@"type",@"zhu",@"image", nil];
+        NSDictionary *other=[[NSDictionary alloc]initWithObjectsAndKeys:@"路霸",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"1",@"type",@"zhu",@"image", nil];
         [_MessageArray addObject:myself];
         [_MessageArray addObject:other];
     }
@@ -51,16 +58,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveDataWithNotification:) name:@"MCDidReceiveDataNotification" object:nil];
     
     [self CreatUIView];
-    
-    
-//    NSTextAttachment *emojiTextAttachment = [NSTextAttachment new];
-//    
-//    //设置表情图片
-//    emojiTextAttachment.image = [UIImage imageNamed:@""];
-//    
-//    //插入表情
-//     [_MessageText.textStorage insertAttributedString:[NSAttributedString attributedStringWithAttachment:emojiTextAttachment]
-//                                          atIndex:_MessageText.selectedRange.location];
 }
 #pragma mark ##### UI界面 #####
 -(void)CreatUIView{
@@ -117,83 +114,107 @@
     NSLog(@"菜单");
 }
 -(void)image:(UIButton*)image{
-    NSLog(@"图片");
+    UIImagePickerController *imagePc=[UIImagePickerController new];
+    imagePc.delegate= self;
+    [self presentViewController:imagePc animated:YES completion:nil];
 }
 -(void)camera:(UIButton*)camera{
-    NSLog(@"相机");
+    UIImagePickerController *imagePc=[UIImagePickerController new];
+    imagePc.sourceType=UIImagePickerControllerSourceTypeCamera;
+    imagePc.delegate= self;
+    [self presentViewController:imagePc animated:YES completion:nil];
 }
 -(void)expression:(UIButton*)expression{
-    NSLog(@"表情");
+    [_TextView.textView resignFirstResponder];
+    expression.selected=!expression.selected;
+    if (expression.selected) {
+        _ExpresView=[[Expression alloc]initWithFrame:CGRectMake(0, Height-240, Width, 240)];
+        _ExpresView.expDelegate=self;
+        [self.view addSubview:_ExpresView];
+        if (_TextView.frame.size.height>35.5) {
+            _ToolView.frame=CGRectMake(0, Height-290, Width, 50);
+            _TextView.frame=CGRectMake(0, Height-290-(5+_NewHeight), Width, 5+_NewHeight);
+            _MessageTable.frame=CGRectMake(0,64, Width, Height-64-290-(5+_NewHeight));
+            if (_MessageArray.count>0) {[self ShowFootCell];}
+        }else{
+            _ToolView.frame=CGRectMake(0, Height-290, Width, 50);
+            _TextView.frame=CGRectMake(0, Height-290-35.5, Width, 35.5);
+            _MessageTable.frame=CGRectMake(0,64, Width, Height-64-290-35.5);
+            if (_MessageArray.count>0) {[self ShowFootCell];}
+        }
+    }
+    else{
+        [_ExpresView removeFromSuperview];
+        if (_TextView.frame.size.height>35.5) {
+            _ToolView.frame=CGRectMake(0, Height-50, Width, 50);
+            _TextView.frame=CGRectMake(0, Height-50-(5+_NewHeight), Width, 5+_NewHeight);
+            _MessageTable.frame=CGRectMake(0,64, Width, Height-64-50-(5+_NewHeight));
+            if (_MessageArray.count>0) {[self ShowFootCell];}
+        }else{
+            _ToolView.frame=CGRectMake(0, Height-50, Width, 50);
+            _TextView.frame=CGRectMake(0, Height-50-35.5, Width, 35.5);
+            _MessageTable.frame=CGRectMake(0,64, Width, Height-64-50-35.5);
+            if (_MessageArray.count>0) {[self ShowFootCell];}
+        }
+    }
 }
 -(void)files:(UIButton*)files{
-    NSLog(@"文件");
+    
+    
+    
+    
+    
+    
+    
 }
 - (void)Showkeyboard:(NSNotification *)notification{
+    [_ExpresView removeFromSuperview];
+    [_ToolView.expression setSelected:NO];
     _KeyBoardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     float duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
     if (_TextView.frame.size.height>35.5) {
         [UIView animateWithDuration:duration animations:^{
             _ToolView.frame=CGRectMake(0, _KeyBoardFrame.origin.y-50, Width, 50);
-            
             _TextView.frame=CGRectMake(0, _KeyBoardFrame.origin.y-50-(5+_NewHeight), Width, 5+_NewHeight);
-            
             _MessageTable.frame=CGRectMake(0,64, Width, _KeyBoardFrame.origin.y-64-50-(5+_NewHeight));
         } completion:^(BOOL finished) {
             if (finished) {
-                if (_MessageArray.count>0) {
-                    //滚动显示最后一条数据
-                    [self ShowFootCell];
-                }
+                if (_MessageArray.count>0) {[self ShowFootCell];}
             }
         }];
     }else{
         [UIView animateWithDuration:duration animations:^{
             _ToolView.frame=CGRectMake(0, _KeyBoardFrame.origin.y-50, Width, 50);
-            
             _TextView.frame=CGRectMake(0, _KeyBoardFrame.origin.y-50-35.5, Width, 35.5);
-            
             _MessageTable.frame=CGRectMake(0,64, Width, _KeyBoardFrame.origin.y-64-50-35.5);
         } completion:^(BOOL finished) {
             if (finished) {
                 _OldY=_TextView.frame.origin.y;
-                if (_MessageArray.count>0) {
-                    //滚动显示最后一条数据
-                    [self ShowFootCell];
-                }
+                if (_MessageArray.count>0) {[self ShowFootCell];}
             }
         }];
     }
 }
 - (void)Hidekeyboard:(NSNotification *)notification{
-        float duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    float duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
     if (_TextView.frame.size.height>35.5) {
         [UIView animateWithDuration:duration animations:^{
             _ToolView.frame=CGRectMake(0, Height-50, Width, 50);
-            
             _TextView.frame=CGRectMake(0, Height-50-(5+_NewHeight), Width, 5+_NewHeight);
-            
             _MessageTable.frame=CGRectMake(0,64, Width, Height-64-50-(5+_NewHeight));
         } completion:^(BOOL finished) {
             if (finished) {
-                if (_MessageArray.count>0) {
-                    //滚动显示最后一条数据
-                    [self ShowFootCell];
-                }
+                if (_MessageArray.count>0) {[self ShowFootCell];}
             }
         }];
     }else{
         [UIView animateWithDuration:duration animations:^{
             _ToolView.frame=CGRectMake(0, Height-50, Width, 50);
-            
             _TextView.frame=CGRectMake(0, Height-50-35.5, Width, 35.5);
-            
             _MessageTable.frame=CGRectMake(0,64, Width, Height-64-50-35.5);
         } completion:^(BOOL finished) {
             if (finished) {
-                if (_MessageArray.count>0) {
-                    //滚动显示最后一条数据
-                    [self ShowFootCell];
-                }
+                if (_MessageArray.count>0) {[self ShowFootCell];}
             }
         }];
     }
@@ -234,14 +255,46 @@
         [_TextView.textView setShowsVerticalScrollIndicator:NO];
     }
 }
+-(void)didSelectExp:(NSString *)exp{
+    MyNSText *Exp=[MyNSText new];
+    Exp.ExpString=[NSString stringWithFormat:@"[%@]",exp];
+    Exp.image = [UIImage imageNamed:exp];
+
+    [_TextView.textView.textStorage insertAttributedString:[NSAttributedString attributedStringWithAttachment:Exp] atIndex:_TextView.textView.selectedRange.location];
+    [_TextView.textView setFont:[UIFont systemFontOfSize:17]];
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
+                                   _appDelegate.mcManager.peerID.displayName,@"name",
+                                   @"[图片]",@"message",
+                                   @"0",@"type",
+                                   [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
+                                   nil];
+        
+        [_MessageArray addObject:messageData];
+        [_MessageTable reloadData];
+        [self ShowFootCell];
+        NSString *dataString=[NSString stringWithFormat:@"%@[;]%@",@"[图片]",[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
+        NSData *dataToSend = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+        NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
+        NSError *error;
+        
+        [_appDelegate.mcManager.session sendData:dataToSend
+                                         toPeers:allPeers
+                                        withMode:MCSessionSendDataReliable
+                                           error:&error];
+        //UIImage *image=info[UIImagePickerControllerOriginalImage];
+    }];
+}
 #pragma mark ##### 发送数据 #####
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){
         if (![_TextView.textView.text isEqualToString:@""]) {
-            
+            NSString *message=[_TextView.textView.textStorage getPlainString];
             NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
                                        _appDelegate.mcManager.peerID.displayName,@"name",
-                                       _TextView.textView.text,@"message",
+                                       message,@"message",
                                        @"0",@"type",
                                        [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
                                        nil];
@@ -249,7 +302,7 @@
             [_MessageArray addObject:messageData];
             [_MessageTable reloadData];
             [self ShowFootCell];
-            NSString *dataString=[NSString stringWithFormat:@"%@[/;]%@",_TextView.textView.text,[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
+            NSString *dataString=[NSString stringWithFormat:@"%@[;]%@",message,[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
             NSData *dataToSend = [dataString dataUsingEncoding:NSUTF8StringEncoding];
             NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
             NSError *error;
@@ -260,7 +313,6 @@
                                                error:&error];
             [_TextView.textView setText:@""];
             _TextView.frame=CGRectMake(0, _KeyBoardFrame.origin.y-50-35.5, Width, 35.5);
-            
             _MessageTable.frame=CGRectMake(0,64, Width, _KeyBoardFrame.origin.y-64-50-35.5);
         }
         return NO;
@@ -272,8 +324,8 @@
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
     NSData *Data = [[notification userInfo] objectForKey:@"data"];
     NSString *dataText = [[NSString alloc] initWithData:Data encoding:NSUTF8StringEncoding];
-    NSArray *dataArray=[dataText componentsSeparatedByString:@"[/;]"];
-
+    NSArray *dataArray=[dataText componentsSeparatedByString:@"[;]"];
+    
     NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
                                peerID.displayName,@"name",
                                dataArray[0],@"message",

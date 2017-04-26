@@ -171,12 +171,12 @@
         [[NSUserDefaults standardUserDefaults] setObject:_GetName.NameText.text forKey:@"username"];
         [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
         [_appDelegate.mcManager advertiseSelf:YES];
+        
         [self PresentMessageController];
         
-        //
-        //    [[_appDelegate mcManager] setupMCBrowser];
-        //    [[[_appDelegate mcManager] browser] setDelegate:self];
-        //    [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+//      [[_appDelegate mcManager] setupMCBrowser];
+//      [[[_appDelegate mcManager] browser] setDelegate:self];
+//      [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
     }
 }
 #pragma mark ##### 连接状态 #####
@@ -242,7 +242,7 @@
     }
     if (data) {
         [data writeToFile:path atomically:YES];
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"image"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"default" forKey:@"image"];
     }
 }
 - (void)didReceiveMemoryWarning {
