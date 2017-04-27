@@ -281,6 +281,7 @@
 		154079321EAD8D5200EDC05C /* Default */ = {
 			isa = PBXGroup;
 			children = (
+				15B94DC41EA70D5E00CC88E3 /* MCManager */,
 				150741AE1EA0636600E24A1D /* AppDelegate.h */,
 				150741AF1EA0636600E24A1D /* AppDelegate.m */,
 				150741B41EA0636600E24A1D /* Main.storyboard */,
@@ -304,7 +305,6 @@
 		157BE4AD1EA62A17007F3B2F /* HomeViewController */ = {
 			isa = PBXGroup;
 			children = (
-				159EEA701EA11BE40013CD8C /* Model */,
 				159EEA711EA11BEB0013CD8C /* View */,
 				159EEA721EA11BF10013CD8C /* Controller */,
 			);
@@ -319,14 +319,6 @@
 				15A09A8F1EA71F2900E4F941 /* Controller */,
 			);
 			name = MessageController;
-			sourceTree = "<group>";
-		};
-		159EEA701EA11BE40013CD8C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				15B94DC41EA70D5E00CC88E3 /* MCManager */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		159EEA711EA11BEB0013CD8C /* View */ = {

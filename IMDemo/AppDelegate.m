@@ -99,6 +99,5 @@
 //    }
 //}
 //[emojiArray writeToFile:DocumentPath atomically:YES];
-//NSLog(@"%@",DocumentPath);
 
 @end
