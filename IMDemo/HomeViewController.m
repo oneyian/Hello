@@ -172,6 +172,9 @@
         [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
         [_appDelegate.mcManager advertiseSelf:YES];
         
+        
+        [_DevicesArray addObject:@"路霸"];
+        [_DevicesArray addObject:@"岛田半藏"];
         [self PresentMessageController];
         
 //      [[_appDelegate mcManager] setupMCBrowser];

@@ -21,11 +21,14 @@
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
-typedef enum {
-    DataTypeText = 0, // 文字
-    DataTypeImage   // 图片
-} DataType;
-@interface MessageController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,NavigationBarDelegate,ExpDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+
+//typedef enum {
+//    DataTypeText = 0, // 文字
+//    DataTypeImage   // 图片
+//} DataType;
+
+@interface MessageController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,NavigationBarDelegate,ExpDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate>
+
 @property (nonatomic,strong) AppDelegate *appDelegate;
 
 @property (nonatomic,strong) UITableView * MessageTable;
@@ -45,10 +48,6 @@ typedef enum {
 -(NSMutableArray*)MessageArray{
     if (!_MessageArray) {
         _MessageArray=[NSMutableArray new];
-        NSDictionary *myself=[[NSDictionary alloc]initWithObjectsAndKeys:@"岛田半藏",@"name",@"荣誉之于生死，救赎之于荣誉。",@"message",@"0",@"type",@"banzang1",@"image", nil];
-        NSDictionary *other=[[NSDictionary alloc]initWithObjectsAndKeys:@"路霸",@"name",@"我一个人就可以把对面全打趴下！[069]",@"message",@"1",@"type",@"zhu",@"image", nil];
-        [_MessageArray addObject:myself];
-        [_MessageArray addObject:other];
     }
     return _MessageArray;
 }
@@ -113,7 +112,16 @@ typedef enum {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)menu:(UIButton *)menu{
-    NSLog(@"菜单");
+    PopDevicesController *PopDevices=[PopDevicesController new];
+    [PopDevices setDevicesArray:_DevicesArray];
+    PopDevices.modalPresentationStyle = UIModalPresentationPopover;
+    PopDevices.popoverPresentationController.sourceView=menu;
+    PopDevices.popoverPresentationController.sourceRect=menu.bounds;
+    PopDevices.popoverPresentationController.backgroundColor=[UIColor whiteColor];
+    PopDevices.preferredContentSize = CGSizeMake(150, 200);
+    PopDevices.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    PopDevices.popoverPresentationController.delegate = self;
+    [self presentViewController:PopDevices animated:YES completion:nil];
 }
 -(void)image:(UIButton*)image{
     UIImagePickerController *imagePc=[UIImagePickerController new];
@@ -161,15 +169,11 @@ typedef enum {
     }
 }
 -(void)files:(UIButton*)files{
-    
-    
-    
-    
-    
-    
-    
+    UIAlertController *Alter=[UIAlertController alertControllerWithTitle:@"分享文件" message:@"您的手机需要越狱才可以进行分享文件." preferredStyle:UIAlertControllerStyleAlert];
+    [Alter addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}]];
+    [self presentViewController:Alter animated:YES completion:nil];
 }
-- (void)Showkeyboard:(NSNotification *)notification{
+-(void)Showkeyboard:(NSNotification *)notification{
     [_ExpresView removeFromSuperview];
     [_ToolView.expression setSelected:NO];
     _KeyBoardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -264,6 +268,7 @@ typedef enum {
 
     [_TextView.textView.textStorage insertAttributedString:[NSAttributedString attributedStringWithAttachment:Exp] atIndex:_TextView.textView.selectedRange.location];
     [_TextView.textView setFont:[UIFont systemFontOfSize:17]];
+    [_TextView.textView setSelectedRange:NSMakeRange(_TextView.textView.selectedRange.location+1,0)];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     [self dismissViewControllerAnimated:YES completion:^{
@@ -288,6 +293,9 @@ typedef enum {
                                            error:&error];
         //UIImage *image=info[UIImagePickerControllerOriginalImage];
     }];
+}
+-(UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
+    return UIModalPresentationNone;
 }
 #pragma mark ##### 发送数据 #####
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
@@ -320,6 +328,36 @@ typedef enum {
         return NO;
     }
     return YES;
+}
+-(void)sendEmoji{
+        if (![_TextView.textView.text isEqualToString:@""]) {
+            NSString *message=[_TextView.textView.textStorage getPlainString];
+            NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
+                                       _appDelegate.mcManager.peerID.displayName,@"name",
+                                       message,@"message",
+                                       @"0",@"type",
+                                       [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
+                                       nil];
+            
+            [_MessageArray addObject:messageData];
+            [_MessageTable reloadData];
+            [self ShowFootCell];
+            NSString *dataString=[NSString stringWithFormat:@"%@[;]%@",message,[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
+            NSData *dataToSend = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+            NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
+            NSError *error;
+            
+            [_appDelegate.mcManager.session sendData:dataToSend
+                                             toPeers:allPeers
+                                            withMode:MCSessionSendDataReliable
+                                               error:&error];
+            [_TextView.textView setText:@""];
+            
+            _ToolView.frame=CGRectMake(0, Height-290, Width, 50);
+            _TextView.frame=CGRectMake(0, Height-290-35.5, Width, 35.5);
+            _MessageTable.frame=CGRectMake(0,64, Width, Height-64-290-35.5);
+            if (_MessageArray.count>0) {[self ShowFootCell];}
+        }
 }
 #pragma mark ##### 数据接收 #####
 -(void)didReceiveDataWithNotification:(NSNotification *)notification{

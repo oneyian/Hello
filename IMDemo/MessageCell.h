@@ -22,8 +22,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel *myself;
 
 
-
-
 @property (weak, nonatomic) IBOutlet UIImageView *headers;
 @property (weak, nonatomic) IBOutlet UILabel *othername;
 @property (weak, nonatomic) IBOutlet UIImageView *othermessage;

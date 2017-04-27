@@ -46,6 +46,12 @@
         [_ExpCollection registerNib:[UINib nibWithNibName:@"ExpItem" bundle:nil]forCellWithReuseIdentifier:@"expItem"];
         _ExpCollection.backgroundColor=[UIColor whiteColor];
         [self addSubview:_ExpCollection];
+        
+        UIButton *Send=[[UIButton alloc]initWithFrame:CGRectMake(Width-60, self.frame.size.height-35, 60, 35)];
+        [Send addTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
+        [Send setTitle:@"发送" forState:UIControlStateNormal];
+        [Send setBackgroundImage:[self imageWithimage:[UIImage imageNamed:@"login_btn_blue"]] forState:UIControlStateNormal];
+        [self addSubview:Send];
     }
     return self;
 }
@@ -61,6 +67,14 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [_expDelegate didSelectExp:_ExpArray[indexPath.item]];
+}
+-(void)send:(UIButton*)send{
+    [_expDelegate sendEmoji];
+}
+#pragma mark ##### 拉伸图片 #####
+-(UIImage*)imageWithimage:(UIImage*)image{
+    image=[image stretchableImageWithLeftCapWidth:image.size.width/2 topCapHeight:image.size.height/2];
+    return image;
 }
 /*
 // Only override drawRect: if you perform custom drawing.

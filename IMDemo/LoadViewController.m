@@ -11,6 +11,7 @@
 #import "GetNameView.h"
 #import "HeaderImageController.h"
 #import "HomeViewController.h"
+#import <UMSocialCore/UMSocialCore.h>
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
@@ -101,12 +102,35 @@
     }
 }
 -(void)getqqname:(UIButton*)getqqname{
-    
-    
-    
-    
-    
-    
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_QQ currentViewController:nil completion:^(id result, NSError *error) {
+        if (error) {
+        } else {
+            UMSocialUserInfoResponse *resp = result;
+            _GetName.NameText.text=resp.name;
+            
+            NSData* imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:resp.iconurl]];
+            UIImage *image=[UIImage imageWithData: imageData];
+            [_GetName.NameView setBackgroundImage:image forState:UIControlStateNormal];
+            
+            NSString *PreferencePath = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSUserDomainMask, YES).firstObject;
+            NSString *Path = [PreferencePath stringByAppendingPathComponent:@"header.png"];
+            [self dataWithImage:image filePath:Path];
+        }
+    }];
+}
+-(void)dataWithImage:(UIImage*)image filePath:(NSString*)path{
+    /** image转data存储 */
+    NSData *data=[NSData new];
+    if (!UIImagePNGRepresentation(image)) {
+        data = UIImageJPEGRepresentation(image, 1);
+    }
+    else {
+        data = UIImagePNGRepresentation(image);
+    }
+    if (data) {
+        [data writeToFile:path atomically:YES];
+        [[NSUserDefaults standardUserDefaults] setObject:@"qq" forKey:@"image"];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

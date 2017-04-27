@@ -11,6 +11,7 @@
 @protocol ExpDelegate <NSObject>
 
 -(void)didSelectExp:(NSString*)exp;
+-(void)sendEmoji;
 
 @end
 

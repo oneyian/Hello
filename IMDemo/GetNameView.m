@@ -32,8 +32,7 @@
         _GetName=[[UIButton alloc]initWithFrame:CGRectMake(15, 150, self.frame.size.width-30, 40)];
         [_GetName.layer setCornerRadius:5];
         [_GetName setClipsToBounds:YES];
-        UIImage *getimage=[self imageWithimage:[UIImage imageNamed:@"login_btn_blue"]];
-        [_GetName setBackgroundImage:getimage forState:UIControlStateNormal];
+        [_GetName setBackgroundImage:[self imageWithimage:[UIImage imageNamed:@"login_btn_blue"]] forState:UIControlStateNormal];
         [_GetName setTitle:@"登陆" forState:UIControlStateNormal];
         [self addSubview:_GetName];
         
