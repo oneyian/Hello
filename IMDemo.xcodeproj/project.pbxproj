@@ -27,7 +27,6 @@
 		1589D0191EAF37980013FD17 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1589D0171EAF37980013FD17 /* Utility.m */; };
 		15952D2B1EA6481800F1F23F /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15952D2A1EA6481800F1F23F /* TextView.m */; };
 		15952D2E1EA6482800F1F23F /* ToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15952D2D1EA6482800F1F23F /* ToolView.m */; };
-		15952D311EA64F9700F1F23F /* HeaderBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 15952D301EA64F9700F1F23F /* HeaderBar.m */; };
 		15952D341EA6520D00F1F23F /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 15952D331EA6520D00F1F23F /* MessageModel.m */; };
 		1595CBB91EADDA5C0018763E /* Expression.m in Sources */ = {isa = PBXBuildFile; fileRef = 1595CBB81EADDA5B0018763E /* Expression.m */; };
 		159950EA1EA7926100BD67E5 /* KeyBoardBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 159950E91EA7926100BD67E5 /* KeyBoardBar.m */; };
@@ -39,6 +38,7 @@
 		15E619831EAED1F700F98924 /* ExpItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E619811EAED1F700F98924 /* ExpItem.m */; };
 		15E619841EAED1F700F98924 /* ExpItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15E619821EAED1F700F98924 /* ExpItem.xib */; };
 		15F6DD211EA83A4100ED3098 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F6DD201EA83A4100ED3098 /* NavigationBar.m */; };
+		15FD20951EB17BDA00DF5BAD /* PopDevicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FD20941EB17BDA00DF5BAD /* PopDevicesController.m */; };
 		15FF90D81EA1ABBF00AF2B1A /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FF90D71EA1ABBF00AF2B1A /* MessageController.m */; };
 /* End PBXBuildFile section */
 
@@ -97,8 +97,6 @@
 		15952D2A1EA6481800F1F23F /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
 		15952D2C1EA6482800F1F23F /* ToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolView.h; sourceTree = "<group>"; };
 		15952D2D1EA6482800F1F23F /* ToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolView.m; sourceTree = "<group>"; };
-		15952D2F1EA64F9700F1F23F /* HeaderBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderBar.h; sourceTree = "<group>"; };
-		15952D301EA64F9700F1F23F /* HeaderBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderBar.m; sourceTree = "<group>"; };
 		15952D321EA6520D00F1F23F /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
 		15952D331EA6520D00F1F23F /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
 		1595CBB71EADDA5B0018763E /* Expression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expression.h; sourceTree = "<group>"; };
@@ -118,6 +116,8 @@
 		15E619821EAED1F700F98924 /* ExpItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpItem.xib; sourceTree = "<group>"; };
 		15F6DD1F1EA83A4100ED3098 /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
 		15F6DD201EA83A4100ED3098 /* NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBar.m; sourceTree = "<group>"; };
+		15FD20931EB17BDA00DF5BAD /* PopDevicesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopDevicesController.h; sourceTree = "<group>"; };
+		15FD20941EB17BDA00DF5BAD /* PopDevicesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopDevicesController.m; sourceTree = "<group>"; };
 		15FF90D61EA1ABBF00AF2B1A /* MessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageController.h; sourceTree = "<group>"; };
 		15FF90D71EA1ABBF00AF2B1A /* MessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -173,6 +173,8 @@
 			isa = PBXGroup;
 			children = (
 				154079311EAD8D2600EDC05C /* MyObj-C */,
+				15FD208E1EB17A7700DF5BAD /* LoadViewController */,
+				15FD208F1EB17A9900DF5BAD /* HeaderImageController */,
 				157BE4AD1EA62A17007F3B2F /* HomeViewController */,
 				1586BAF51EA6173A0083F897 /* MessageController */,
 				154079321EAD8D5200EDC05C /* Default */,
@@ -261,9 +263,9 @@
 		157BE4AD1EA62A17007F3B2F /* HomeViewController */ = {
 			isa = PBXGroup;
 			children = (
-				159EEA721EA11BF10013CD8C /* Controller */,
 				159EEA701EA11BE40013CD8C /* Model */,
 				159EEA711EA11BEB0013CD8C /* View */,
+				159EEA721EA11BF10013CD8C /* Controller */,
 			);
 			name = HomeViewController;
 			sourceTree = "<group>";
@@ -291,7 +293,6 @@
 			children = (
 				15B94DC51EA7135700CC88E3 /* PromptView */,
 				151431CB1EA78E040013A45C /* GetName */,
-				1576F5041EA9A1FA008202D0 /* ImageItem */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -299,10 +300,6 @@
 		159EEA721EA11BF10013CD8C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				15B9B05E1EA7B3B700C839EC /* HeaderImageController.h */,
-				15B9B05F1EA7B3B700C839EC /* HeaderImageController.m */,
-				150B4DDC1EA6E8CF00BEC069 /* LoadViewController.h */,
-				150B4DDD1EA6E8CF00BEC069 /* LoadViewController.m */,
 				150741B11EA0636600E24A1D /* HomeViewController.h */,
 				150741B21EA0636600E24A1D /* HomeViewController.m */,
 			);
@@ -314,6 +311,7 @@
 			children = (
 				15FF90D61EA1ABBF00AF2B1A /* MessageController.h */,
 				15FF90D71EA1ABBF00AF2B1A /* MessageController.m */,
+				15FD20911EB17B4600DF5BAD /* PopDevicesController */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -329,7 +327,6 @@
 		15A09A911EA71F3800E4F941 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				15F6DD241EA83A9900ED3098 /* NavigationBar */,
 				15B94DC21EA70CF900CC88E3 /* MessageCell */,
 				15F6DD221EA83A6100ED3098 /* TextView */,
 				15F6DD231EA83A6900ED3098 /* ToolView */,
@@ -413,13 +410,48 @@
 			name = ToolView;
 			sourceTree = "<group>";
 		};
-		15F6DD241EA83A9900ED3098 /* NavigationBar */ = {
+		15FD208E1EB17A7700DF5BAD /* LoadViewController */ = {
 			isa = PBXGroup;
 			children = (
-				15952D2F1EA64F9700F1F23F /* HeaderBar.h */,
-				15952D301EA64F9700F1F23F /* HeaderBar.m */,
+				150B4DDC1EA6E8CF00BEC069 /* LoadViewController.h */,
+				150B4DDD1EA6E8CF00BEC069 /* LoadViewController.m */,
 			);
-			name = NavigationBar;
+			name = LoadViewController;
+			sourceTree = "<group>";
+		};
+		15FD208F1EB17A9900DF5BAD /* HeaderImageController */ = {
+			isa = PBXGroup;
+			children = (
+				15FD20921EB17B6400DF5BAD /* View */,
+				15FD20901EB17ADE00DF5BAD /* Controller */,
+			);
+			name = HeaderImageController;
+			sourceTree = "<group>";
+		};
+		15FD20901EB17ADE00DF5BAD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				15B9B05E1EA7B3B700C839EC /* HeaderImageController.h */,
+				15B9B05F1EA7B3B700C839EC /* HeaderImageController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		15FD20911EB17B4600DF5BAD /* PopDevicesController */ = {
+			isa = PBXGroup;
+			children = (
+				15FD20931EB17BDA00DF5BAD /* PopDevicesController.h */,
+				15FD20941EB17BDA00DF5BAD /* PopDevicesController.m */,
+			);
+			name = PopDevicesController;
+			sourceTree = "<group>";
+		};
+		15FD20921EB17B6400DF5BAD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1576F5041EA9A1FA008202D0 /* ImageItem */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -570,6 +602,7 @@
 				150B4DDE1EA6E8CF00BEC069 /* LoadViewController.m in Sources */,
 				15B9B0601EA7B3B700C839EC /* HeaderImageController.m in Sources */,
 				15B94DC81EA7139500CC88E3 /* PromptView.m in Sources */,
+				15FD20951EB17BDA00DF5BAD /* PopDevicesController.m in Sources */,
 				15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */,
 				150741B01EA0636600E24A1D /* AppDelegate.m in Sources */,
 				150EA8891EAEF18E001A4DA2 /* MyNSText.m in Sources */,
@@ -583,7 +616,6 @@
 				15FF90D81EA1ABBF00AF2B1A /* MessageController.m in Sources */,
 				1589D0191EAF37980013FD17 /* Utility.m in Sources */,
 				1595CBB91EADDA5C0018763E /* Expression.m in Sources */,
-				15952D311EA64F9700F1F23F /* HeaderBar.m in Sources */,
 				15F6DD211EA83A4100ED3098 /* NavigationBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

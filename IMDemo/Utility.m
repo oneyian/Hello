@@ -17,6 +17,7 @@
     NSArray  *face = [NSArray arrayWithContentsOfFile:filePath];
     //1、创建一个可变的属性字符串
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:text];
+    [attributeString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17] range:NSMakeRange(0, attributeString.length)];
     //2、通过正则表达式来匹配字符串
     NSString *regex_emoji = @"\\[[a-zA-Z0-9\\/\\u4e00-\\u9fa5]+\\]"; //匹配表情
     

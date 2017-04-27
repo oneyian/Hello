@@ -31,7 +31,7 @@ typedef enum {
 
 +(instancetype)cellWithTableView:(UITableView*)tableView dataWithModel:(MessageModel*)model;
 
-+(CGSize)sizeWithString:(NSString*)string;
 +(UIImage*)imageWithimage:(UIImage*)image;
++ (CGSize)sizeLabelToFit:(NSMutableAttributedString *)String;
 
 @end

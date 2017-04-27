@@ -16,6 +16,8 @@
 #import "Expression.h"
 #import "MyNSText.h"
 #import "NSAttributedString+MyNSAttributedString.h"
+#import "Utility.h"
+#import "PopDevicesController.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
@@ -43,8 +45,8 @@ typedef enum {
 -(NSMutableArray*)MessageArray{
     if (!_MessageArray) {
         _MessageArray=[NSMutableArray new];
-        NSDictionary *myself=[[NSDictionary alloc]initWithObjectsAndKeys:@"Me",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"0",@"type",@"zhu",@"image", nil];
-        NSDictionary *other=[[NSDictionary alloc]initWithObjectsAndKeys:@"路霸",@"name",@"通过我亲自测试，使用自动算高cell不可取，自动算高的cell在高度不发生变化的情况下（所谓高度不发生变化指的是cell在重用的时候高度不发生变化）滑动并不卡顿现象（即使高度发生变化，滑动过一次后卡顿就消失了，可见apple对约束的计算结果做了缓存，未来可期）",@"message",@"1",@"type",@"zhu",@"image", nil];
+        NSDictionary *myself=[[NSDictionary alloc]initWithObjectsAndKeys:@"岛田半藏",@"name",@"荣誉之于生死，救赎之于荣誉。",@"message",@"0",@"type",@"banzang1",@"image", nil];
+        NSDictionary *other=[[NSDictionary alloc]initWithObjectsAndKeys:@"路霸",@"name",@"我一个人就可以把对面全打趴下！[069]",@"message",@"1",@"type",@"zhu",@"image", nil];
         [_MessageArray addObject:myself];
         [_MessageArray addObject:other];
     }
@@ -226,7 +228,7 @@ typedef enum {
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_MessageArray.count>0) {
         MessageModel *model=[MessageModel messageWithModel:_MessageArray[indexPath.row]];
-        return [MessageCell sizeWithString:model.message].height+70;
+        return [MessageCell sizeLabelToFit:[Utility emotionStrWithString:model.message]].height+70;
     }else{
         return 0.01f;
     }

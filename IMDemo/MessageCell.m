@@ -16,7 +16,7 @@
 @implementation MessageCell
 
 +(instancetype)cellWithTableView:(UITableView*)tableView dataWithModel:(MessageModel*)model{
-    CGSize size= [self sizeWithString:model.message];
+    CGSize size= [self sizeLabelToFit:[Utility emotionStrWithString:model.message]];
     
     if (model.type==MessageTypeMe) {
         MessageCell *Cell=[tableView dequeueReusableCellWithIdentifier:@"myself"];
@@ -62,8 +62,13 @@
     }
 }
 #pragma mark ##### 计算Size #####
-+(CGSize)sizeWithString:(NSString*)string{
-    CGSize size = [string boundingRectWithSize:CGSizeMake(Width-123, Height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]} context:nil].size;
++ (CGSize)sizeLabelToFit:(NSMutableAttributedString *)String{
+    UILabel *tempLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, Width-123, Height)];
+    tempLabel.attributedText = String;
+    tempLabel.numberOfLines = 0;
+    [tempLabel sizeToFit];
+    CGSize size = tempLabel.frame.size;
+    size = CGSizeMake(size.width, size.height);
     return size;
 }
 #pragma mark ##### 拉伸图片 #####
