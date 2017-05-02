@@ -7,6 +7,8 @@
 //
 
 #import "MessageController.h"
+#import <Photos/Photos.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "AppDelegate.h"
 #import "MessageCell.h"
 #import "MessageModel.h"
@@ -18,6 +20,7 @@
 #import "NSAttributedString+MyNSAttributedString.h"
 #import "Utility.h"
 #import "PopDevicesController.h"
+
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
@@ -232,7 +235,11 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_MessageArray.count>0) {
         MessageModel *model=[MessageModel messageWithModel:_MessageArray[indexPath.row]];
-        return [MessageCell sizeLabelToFit:[Utility emotionStrWithString:model.message]].height+70;
+        if ([model.dataType isEqualToString:@"text"]) {
+                    return [MessageCell sizeLabelToFit:[Utility emotionStrWithString:model.message]].height+70;
+        }else{
+            return 120;
+        }
     }else{
         return 0.01f;
     }
@@ -272,26 +279,42 @@
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     [self dismissViewControllerAnimated:YES completion:^{
-        NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
-                                   _appDelegate.mcManager.peerID.displayName,@"name",
-                                   @"[图片]",@"message",
-                                   @"0",@"type",
-                                   [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
-                                   nil];
         
-        [_MessageArray addObject:messageData];
-        [_MessageTable reloadData];
-        [self ShowFootCell];
-        NSString *dataString=[NSString stringWithFormat:@"%@[;]%@",@"[图片]",[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
-        NSData *dataToSend = [dataString dataUsingEncoding:NSUTF8StringEncoding];
-        NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
-        NSError *error;
-        
-        [_appDelegate.mcManager.session sendData:dataToSend
-                                         toPeers:allPeers
-                                        withMode:MCSessionSendDataReliable
-                                           error:&error];
-        //UIImage *image=info[UIImagePickerControllerOriginalImage];
+        UIImage *image=info[UIImagePickerControllerOriginalImage];
+        NSData *imageData=[NSData new];
+        if (!UIImagePNGRepresentation(image)) {
+            imageData = UIImageJPEGRepresentation(image, 1);
+        }
+        else {
+            imageData = UIImagePNGRepresentation(image);
+        }
+        if (imageData) {
+            NSString *imageStr = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+            
+            NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
+                                       _appDelegate.mcManager.peerID.displayName,@"name",
+                                       imageStr,@"message",
+                                       @"0",@"type",
+                                       @"image",@"datatype",
+                                       [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
+                                       nil];
+            
+            [_MessageArray addObject:messageData];
+            [_MessageTable reloadData];
+            [self ShowFootCell];
+            
+            NSMutableDictionary *dataDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:imageStr,@"message",[[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",@"text",@"datatype", nil];
+            
+            NSData *dataToSend = [NSKeyedArchiver archivedDataWithRootObject:dataDict];
+            
+            NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
+            NSError *error;
+            
+            [_appDelegate.mcManager.session sendData:dataToSend
+                                             toPeers:allPeers
+                                            withMode:MCSessionSendDataReliable
+                                               error:&error];
+        }
     }];
 }
 -(UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
@@ -306,14 +329,18 @@
                                        _appDelegate.mcManager.peerID.displayName,@"name",
                                        message,@"message",
                                        @"0",@"type",
+                                       @"text",@"datatype",
                                        [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
                                        nil];
             
             [_MessageArray addObject:messageData];
             [_MessageTable reloadData];
             [self ShowFootCell];
-            NSString *dataString=[NSString stringWithFormat:@"%@[;]%@",message,[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
-            NSData *dataToSend = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+            
+            NSMutableDictionary *dataDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:message,@"message",[[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",@"text",@"datatype", nil];
+            
+            NSData *dataToSend = [NSKeyedArchiver archivedDataWithRootObject:dataDict];
+
             NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
             NSError *error;
             
@@ -336,14 +363,18 @@
                                        _appDelegate.mcManager.peerID.displayName,@"name",
                                        message,@"message",
                                        @"0",@"type",
+                                       @"text",@"datatype",
                                        [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
                                        nil];
             
             [_MessageArray addObject:messageData];
             [_MessageTable reloadData];
             [self ShowFootCell];
-            NSString *dataString=[NSString stringWithFormat:@"%@[;]%@",message,[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
-            NSData *dataToSend = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+            
+            NSMutableDictionary *dataDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:message,@"message",[[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",@"text",@"datatype", nil];
+            
+            NSData *dataToSend = [NSKeyedArchiver archivedDataWithRootObject:dataDict];
+
             NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
             NSError *error;
             
@@ -363,14 +394,14 @@
 -(void)didReceiveDataWithNotification:(NSNotification *)notification{
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
     NSData *Data = [[notification userInfo] objectForKey:@"data"];
-    NSString *dataText = [[NSString alloc] initWithData:Data encoding:NSUTF8StringEncoding];
-    NSArray *dataArray=[dataText componentsSeparatedByString:@"[;]"];
+    
+    NSMutableDictionary *dataDict=[NSKeyedUnarchiver unarchiveObjectWithData:Data];
     
     NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
                                peerID.displayName,@"name",
-                               dataArray[0],@"message",
+                               [dataDict objectForKey:@"message"],@"message",
                                @"1",@"type",
-                               dataArray[1],@"image",
+                               [dataDict objectForKey:@"image"],@"image",[dataDict objectForKey:@"type"],@"datatype",
                                nil];
     
     [_MessageArray addObject:messageData];

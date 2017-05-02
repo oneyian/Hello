@@ -31,6 +31,7 @@
 		1595CBB91EADDA5C0018763E /* Expression.m in Sources */ = {isa = PBXBuildFile; fileRef = 1595CBB81EADDA5B0018763E /* Expression.m */; };
 		159950EA1EA7926100BD67E5 /* KeyBoardBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 159950E91EA7926100BD67E5 /* KeyBoardBar.m */; };
 		159A800A1EB02DC10002DB8B /* emoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 159A80091EB02DC10002DB8B /* emoji.plist */; };
+		15A102C41EB2E3F0004F5835 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A102C31EB2E3F0004F5835 /* Photos.framework */; };
 		15B94DC81EA7139500CC88E3 /* PromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B94DC71EA7139500CC88E3 /* PromptView.m */; };
 		15B9B0601EA7B3B700C839EC /* HeaderImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B9B05F1EA7B3B700C839EC /* HeaderImageController.m */; };
 		15D2E94A1EB1969C00A018BD /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D2E93E1EB1969C00A018BD /* libSocialQQ.a */; };
@@ -118,6 +119,7 @@
 		159950E81EA7926100BD67E5 /* KeyBoardBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyBoardBar.h; sourceTree = "<group>"; };
 		159950E91EA7926100BD67E5 /* KeyBoardBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyBoardBar.m; sourceTree = "<group>"; };
 		159A80091EB02DC10002DB8B /* emoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji.plist; sourceTree = "<group>"; };
+		15A102C31EB2E3F0004F5835 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		15B94DC61EA7139500CC88E3 /* PromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromptView.h; sourceTree = "<group>"; };
 		15B94DC71EA7139500CC88E3 /* PromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromptView.m; sourceTree = "<group>"; };
 		15B9B05E1EA7B3B700C839EC /* HeaderImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderImageController.h; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15A102C41EB2E3F0004F5835 /* Photos.framework in Frameworks */,
 				15D2E95A1EB19B4000A018BD /* libc++.tbd in Frameworks */,
 				15D2E9581EB19B3500A018BD /* SystemConfiguration.framework in Frameworks */,
 				15D2E9561EB19B2600A018BD /* CoreGraphics.framework in Frameworks */,
@@ -456,6 +459,7 @@
 		15E4B2481EA0671200A67CDE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15A102C31EB2E3F0004F5835 /* Photos.framework */,
 				15D2E9591EB19B4000A018BD /* libc++.tbd */,
 				15D2E9571EB19B3500A018BD /* SystemConfiguration.framework */,
 				15D2E9551EB19B2600A018BD /* CoreGraphics.framework */,

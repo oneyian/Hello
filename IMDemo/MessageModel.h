@@ -17,6 +17,8 @@
 @property (nonatomic,assign) NSInteger type;
 /** 信息 */
 @property (nonatomic,strong) NSString * message;
+/** 数据类型 */
+@property (nonatomic,strong) NSString * dataType;
 
 +(instancetype)messageWithModel:(NSDictionary*)data;
 @end

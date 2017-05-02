@@ -20,12 +20,14 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel *myname;
 @property (weak, nonatomic) IBOutlet UIImageView *mymessage;
 @property (weak, nonatomic) IBOutlet UILabel *myself;
+@property (weak, nonatomic) IBOutlet UIImageView *photo;
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *headers;
 @property (weak, nonatomic) IBOutlet UILabel *othername;
 @property (weak, nonatomic) IBOutlet UIImageView *othermessage;
 @property (weak, nonatomic) IBOutlet UILabel *other;
+@property (weak, nonatomic) IBOutlet UIImageView *image;
 
 +(instancetype)cellWithTableView:(UITableView*)tableView dataWithModel:(MessageModel*)model;
 

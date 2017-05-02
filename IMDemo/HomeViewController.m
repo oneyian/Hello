@@ -172,14 +172,13 @@
         [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
         [_appDelegate.mcManager advertiseSelf:YES];
         
+//        [_DevicesArray addObject:@"路霸"];
+//        [_DevicesArray addObject:@"岛田半藏"];
+//        [self PresentMessageController];
         
-        [_DevicesArray addObject:@"路霸"];
-        [_DevicesArray addObject:@"岛田半藏"];
-        [self PresentMessageController];
-        
-//      [[_appDelegate mcManager] setupMCBrowser];
-//      [[[_appDelegate mcManager] browser] setDelegate:self];
-//      [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+      [[_appDelegate mcManager] setupMCBrowser];
+      [[[_appDelegate mcManager] browser] setDelegate:self];
+      [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
     }
 }
 #pragma mark ##### 连接状态 #####

@@ -16,6 +16,7 @@
     model.type=[[data objectForKey:@"type"] integerValue];
     model.message=[data objectForKey:@"message"];
     model.image=[data objectForKey:@"image"];
+    model.dataType=[data objectForKey:@"datatype"];
     return model;
 }
 @end
