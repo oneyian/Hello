@@ -58,7 +58,6 @@
             Cell.header.image=[UIImage imageWithContentsOfFile:Path];
             [Cell.header.layer setCornerRadius:20];
             [Cell.header setClipsToBounds:YES];
-            
             return Cell;
         }
     }else{

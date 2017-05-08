@@ -20,15 +20,11 @@
 #import "NSAttributedString+MyNSAttributedString.h"
 #import "Utility.h"
 #import "PopDevicesController.h"
+#import "ImageViewController.h"
 
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
-
-//typedef enum {
-//    DataTypeText = 0, // 文字
-//    DataTypeImage   // 图片
-//} DataType;
 
 @interface MessageController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,NavigationBarDelegate,ExpDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate>
 
@@ -45,6 +41,7 @@
 @property (nonatomic,strong) TextView * TextView;
 @property (nonatomic,strong) ToolView * ToolView;
 @property (nonatomic,strong) Expression * ExpresView;
+@property (nonatomic,strong) UIActivityIndicatorView * Activity;
 @end
 
 @implementation MessageController
@@ -62,8 +59,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveDataWithNotification:) name:@"MCDidReceiveDataNotification" object:nil];
     
     [self CreatUIView];
+    [self loadActivity];
 }
 #pragma mark ##### UI界面 #####
+-(void)loadActivity{
+    _Activity=[[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    _Activity.center=self.view.center;
+    [_Activity setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [_Activity setBackgroundColor:[UIColor lightGrayColor]];
+    [_Activity.layer setCornerRadius:10];
+    [self.view addSubview:_Activity];
+}
 -(void)CreatUIView{
     self.automaticallyAdjustsScrollViewInsets = NO;//关闭布局
     
@@ -249,6 +255,15 @@
     MessageCell *Cell=[MessageCell cellWithTableView:tableView dataWithModel:model];
     return Cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    MessageModel *model=[MessageModel messageWithModel:_MessageArray[indexPath.row]];
+    if (![model.dataType isEqualToString:@"text"]) {
+        ImageViewController *Image=[ImageViewController new];
+        [Image setImage:model.message];
+        Image.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:Image animated:YES completion:nil];
+    }
+}
 - (void)textViewDidChange:(UITextView *)textView{
     CGSize newSize = [textView sizeThatFits:CGSizeMake(textView.frame.size.width,MAXFLOAT)];
     
@@ -289,31 +304,41 @@
             imageData = UIImagePNGRepresentation(image);
         }
         if (imageData) {
-            NSString *imageStr = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-            
-            NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
-                                       _appDelegate.mcManager.peerID.displayName,@"name",
-                                       imageStr,@"message",
-                                       @"0",@"type",
-                                       @"image",@"datatype",
-                                       [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
-                                       nil];
-            
-            [_MessageArray addObject:messageData];
-            [_MessageTable reloadData];
-            [self ShowFootCell];
-            
-            NSMutableDictionary *dataDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:imageStr,@"message",[[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",@"text",@"datatype", nil];
-            
-            NSData *dataToSend = [NSKeyedArchiver archivedDataWithRootObject:dataDict];
-            
-            NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
-            NSError *error;
-            
-            [_appDelegate.mcManager.session sendData:dataToSend
-                                             toPeers:allPeers
-                                            withMode:MCSessionSendDataReliable
-                                               error:&error];
+            [_Activity startAnimating];
+            __block NSString *imageStr=[NSString new];
+            NSBlockOperation *oper=[NSBlockOperation blockOperationWithBlock:^{
+                imageStr = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+            }];
+            NSBlockOperation *oper1=[NSBlockOperation blockOperationWithBlock:^{
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys: _appDelegate.mcManager.peerID.displayName,@"name",
+                                               imageStr,@"message",
+                                               @"0",@"type",
+                                               @"image",@"datatype",
+                                               [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
+                                               nil];
+                    
+                    [_MessageArray addObject:messageData];
+                    [_MessageTable reloadData];
+                    [self ShowFootCell];
+                    [_Activity stopAnimating];
+                    
+                    NSMutableDictionary *dataDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:imageStr,@"message",[[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",@"image",@"datatype", nil];
+                    
+                    NSData *dataToSend = [NSKeyedArchiver archivedDataWithRootObject:dataDict];
+                    
+                    NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
+                    NSError *error;
+                    
+                    [_appDelegate.mcManager.session sendData:dataToSend
+                                                     toPeers:allPeers
+                                                    withMode:MCSessionSendDataReliable
+                                                       error:&error];
+                }];
+            }];
+            [oper1 addDependency:oper];
+            NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+            [queue addOperations:@[oper, oper1] waitUntilFinished:NO];
         }
     }];
 }
@@ -392,19 +417,25 @@
 }
 #pragma mark ##### 数据接收 #####
 -(void)didReceiveDataWithNotification:(NSNotification *)notification{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_Activity startAnimating];
+    });
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
     NSData *Data = [[notification userInfo] objectForKey:@"data"];
     
     NSMutableDictionary *dataDict=[NSKeyedUnarchiver unarchiveObjectWithData:Data];
-    
+
     NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
                                peerID.displayName,@"name",
                                [dataDict objectForKey:@"message"],@"message",
                                @"1",@"type",
                                [dataDict objectForKey:@"image"],@"image",[dataDict objectForKey:@"datatype"],@"datatype",
                                nil];
+
     [_MessageArray addObject:messageData];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
+        [_Activity stopAnimating];
         [_MessageTable reloadData];
         [self ShowFootCell];
     });

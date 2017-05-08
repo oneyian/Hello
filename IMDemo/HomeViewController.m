@@ -27,6 +27,7 @@
 @property (nonatomic,strong) UIAlertController *Alert;
 @property (nonatomic,strong) PromptView * Prompt;
 @property (nonatomic,strong) GetNameView * GetName;
+@property BOOL isDevices;
 
 @end
 
@@ -38,9 +39,12 @@
     return _DevicesArray;
 }
 -(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
-    [self.DevicesArray removeAllObjects];
-    [_GetName.NameView setBackgroundImage:[_GetName setHeaderImage] forState:UIControlStateNormal];
+    if (!_isDevices) {
+        [super viewWillAppear:YES];
+        [self.DevicesArray removeAllObjects];
+        [_GetName.NameView setBackgroundImage:[_GetName setHeaderImage] forState:UIControlStateNormal];
+        _isDevices=NO;
+    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -172,10 +176,8 @@
         [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
         [_appDelegate.mcManager advertiseSelf:YES];
         
-//        [_DevicesArray addObject:@"路霸"];
-//        [_DevicesArray addObject:@"岛田半藏"];
 //        [self PresentMessageController];
-        
+
       [[_appDelegate mcManager] setupMCBrowser];
       [[[_appDelegate mcManager] browser] setDelegate:self];
       [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
@@ -189,10 +191,10 @@
     if (state == MCSessionStateConnecting) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [_Alert setMessage:@"正在连接中..."];
-            [_DevicesArray addObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
+            [self.DevicesArray addObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
         });
     }else if (state == MCSessionStateConnected) {
-        if(![_DevicesArray containsObject:peerID.displayName]){
+        if(![self.DevicesArray containsObject:peerID.displayName]){
             [_DevicesArray addObject:peerID.displayName];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -219,6 +221,7 @@
 }
 #pragma mark ##### 代理方法区 #####
 -(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
+    _isDevices=YES;
     [_appDelegate.mcManager.browser dismissViewControllerAnimated:NO completion:^{
         [self PresentMessageController];
     }];

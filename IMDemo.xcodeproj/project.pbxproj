@@ -46,6 +46,7 @@
 		15D2E9561EB19B2600A018BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D2E9551EB19B2600A018BD /* CoreGraphics.framework */; };
 		15D2E9581EB19B3500A018BD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D2E9571EB19B3500A018BD /* SystemConfiguration.framework */; };
 		15D2E95A1EB19B4000A018BD /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D2E9591EB19B4000A018BD /* libc++.tbd */; };
+		15DCFFFC1EC0813D00367012 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DCFFFB1EC0813D00367012 /* ImageViewController.m */; };
 		15E4B24A1EA0671200A67CDE /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */; };
 		15E4B24D1EA078C300A67CDE /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E4B24C1EA078C300A67CDE /* MCManager.m */; };
 		15E619831EAED1F700F98924 /* ExpItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E619811EAED1F700F98924 /* ExpItem.m */; };
@@ -137,6 +138,8 @@
 		15D2E9551EB19B2600A018BD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		15D2E9571EB19B3500A018BD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		15D2E9591EB19B4000A018BD /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		15DCFFFA1EC0813D00367012 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		15DCFFFB1EC0813D00367012 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		15E4B2491EA0671200A67CDE /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		15E4B24B1EA078C300A67CDE /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
 		15E4B24C1EA078C300A67CDE /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
@@ -219,7 +222,6 @@
 				15FD208F1EB17A9900DF5BAD /* HeaderImageController */,
 				157BE4AD1EA62A17007F3B2F /* HomeViewController */,
 				1586BAF51EA6173A0083F897 /* MessageController */,
-				15FD20911EB17B4600DF5BAD /* PopDevicesController */,
 				154079321EAD8D5200EDC05C /* Default */,
 				150741AB1EA0636600E24A1D /* Supporting Files */,
 			);
@@ -317,6 +319,7 @@
 		1586BAF51EA6173A0083F897 /* MessageController */ = {
 			isa = PBXGroup;
 			children = (
+				15FD20911EB17B4600DF5BAD /* PopDevicesController */,
 				15A09A901EA71F2D00E4F941 /* Model */,
 				15A09A911EA71F3800E4F941 /* View */,
 				15A09A8F1EA71F2900E4F941 /* Controller */,
@@ -347,6 +350,8 @@
 			children = (
 				15FF90D61EA1ABBF00AF2B1A /* MessageController.h */,
 				15FF90D71EA1ABBF00AF2B1A /* MessageController.m */,
+				15DCFFFA1EC0813D00367012 /* ImageViewController.h */,
+				15DCFFFB1EC0813D00367012 /* ImageViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -732,6 +737,7 @@
 				150EA88C1EAEF79F001A4DA2 /* NSAttributedString+MyNSAttributedString.m in Sources */,
 				15FD209B1EB1850C00DF5BAD /* DevicesCell.m in Sources */,
 				1576F5091EA9AC59008202D0 /* ImageItem.m in Sources */,
+				15DCFFFC1EC0813D00367012 /* ImageViewController.m in Sources */,
 				15E619831EAED1F700F98924 /* ExpItem.m in Sources */,
 				15FF90D81EA1ABBF00AF2B1A /* MessageController.m in Sources */,
 				1589D0191EAF37980013FD17 /* Utility.m in Sources */,
