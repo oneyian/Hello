@@ -401,9 +401,8 @@
                                peerID.displayName,@"name",
                                [dataDict objectForKey:@"message"],@"message",
                                @"1",@"type",
-                               [dataDict objectForKey:@"image"],@"image",[dataDict objectForKey:@"type"],@"datatype",
+                               [dataDict objectForKey:@"image"],@"image",[dataDict objectForKey:@"datatype"],@"datatype",
                                nil];
-    
     [_MessageArray addObject:messageData];
     dispatch_async(dispatch_get_main_queue(), ^{
         [_MessageTable reloadData];
