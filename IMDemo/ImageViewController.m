@@ -11,27 +11,52 @@
 #define Height [UIScreen mainScreen].bounds.size.height
 
 @interface ImageViewController ()
-
+@property (nonatomic,strong) UIImageView * imageView;
 @end
 
 @implementation ImageViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 88, Width, Height-176)];
-    [imageView setContentMode:UIViewContentModeScaleAspectFit];
+    _imageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 88, Width, Height-176)];
+    [_imageView setContentMode:UIViewContentModeScaleAspectFit];
     NSData *data=[[NSData alloc]initWithBase64EncodedString:_image options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    [imageView setImage:[UIImage imageWithData:data]];
-    [self.view addSubview:imageView];
+    [_imageView setImage:[UIImage imageWithData:data]];
+    [self.view addSubview:_imageView];
     
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self     action:@selector(tap:)];
     tap.numberOfTapsRequired =1;
     tap.numberOfTouchesRequired =1;
     [self.view addGestureRecognizer:tap];
+    
+    UILongPressGestureRecognizer *longPress =[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPress:)];
+    longPress.minimumPressDuration =0.5;
+    longPress.allowableMovement =1;
+    [self.view addGestureRecognizer:longPress];
     // Do any additional setup after loading the view.
 }
 -(void)tap:(UITapGestureRecognizer *)tapSender{
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+-(void)longPress:(UILongPressGestureRecognizer *)longPressSender{
+    if (longPressSender.state == UIGestureRecognizerStateBegan) {
+        //将图片保存到相册
+        UIAlertController *alertVc =[UIAlertController alertControllerWithTitle:@"图片" message:@"是否保存图片到相册." preferredStyle:UIAlertControllerStyleAlert];
+        [alertVc addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }]];
+        [alertVc addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIImageWriteToSavedPhotosAlbum(_imageView.image, nil, nil, nil);
+            [self SaveWithSuggest];
+        }]];
+        [self presentViewController:alertVc animated:YES completion:nil];
+    }else if (longPressSender.state == UIGestureRecognizerStateEnded)
+    {}
+}
+-(void)SaveWithSuggest{
+    UIAlertController *alertVc =[UIAlertController alertControllerWithTitle:@"图片" message:@"操作成功." preferredStyle:UIAlertControllerStyleAlert];
+    [alertVc addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }]];
+    [self presentViewController:alertVc animated:YES completion:nil];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
