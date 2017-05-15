@@ -12,11 +12,19 @@
 
 +(instancetype)messageWithModel:(NSDictionary*)data{
     MessageModel *model=[self new];
+    model.dataType=[data objectForKey:@"datatype"];
     model.name=[data objectForKey:@"name"];
     model.type=[[data objectForKey:@"type"] integerValue];
-    model.message=[data objectForKey:@"message"];
     model.image=[data objectForKey:@"image"];
-    model.dataType=[data objectForKey:@"datatype"];
+    if ([model.dataType isEqualToString:@"text"]) {
+        model.message=[data objectForKey:@"message"];
+        model.imageData=nil;
+    }else{
+        model.imageData=[data objectForKey:@"message"];
+        model.message=@"";
+    }
+
+    
     return model;
 }
 @end

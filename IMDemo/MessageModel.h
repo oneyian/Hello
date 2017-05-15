@@ -17,6 +17,8 @@
 @property (nonatomic,assign) NSInteger type;
 /** 信息 */
 @property (nonatomic,strong) NSString * message;
+/** 图片 */
+@property (nonatomic,strong) NSData * imageData;
 /** 数据类型 */
 @property (nonatomic,strong) NSString * dataType;
 

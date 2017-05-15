@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ImageViewController : UIViewController
-@property (nonatomic,copy) NSString * image;
+@property (nonatomic,copy) NSData * imageData;
 @end

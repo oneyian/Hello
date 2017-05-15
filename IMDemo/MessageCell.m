@@ -25,15 +25,13 @@
             }
             [Cell setBackgroundColor:tableView.backgroundColor];
             Cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            [Cell.mymessage setHidden:NO];
             Cell.myself.frame=CGRectMake(Width-size.width-70, 45, size.width, size.height);
             Cell.mymessage.frame=CGRectMake(Width-size.width-90, 25, size.width+40, size.height+40);
-            
             Cell.mymessage.image=[self imageWithimage:[UIImage imageNamed:@"chat_send_dim"]];
             Cell.myname.text=model.name;
-            
             Cell.myself.attributedText=[Utility emotionStrWithString:model.message];
-            
+            Cell.photo.image=[UIImage imageWithData:model.imageData];
             NSString *PreferencePath = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSUserDomainMask, YES).firstObject;
             NSString *Path = [PreferencePath stringByAppendingPathComponent:@"header.png"];
             Cell.header.image=[UIImage imageWithContentsOfFile:Path];
@@ -47,12 +45,10 @@
             }
             [Cell setBackgroundColor:tableView.backgroundColor];
             Cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            [Cell.mymessage setHidden:YES];
             Cell.myname.text=model.name;
-            
-            NSData *data=[[NSData alloc]initWithBase64EncodedString:model.message options:NSDataBase64DecodingIgnoreUnknownCharacters];
-            Cell.photo.image=[UIImage imageWithData:data];
-            
+            Cell.myself.attributedText=[Utility emotionStrWithString:model.message];
+            Cell.photo.image=[UIImage imageWithData:model.imageData];
             NSString *PreferencePath = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSUserDomainMask, YES).firstObject;
             NSString *Path = [PreferencePath stringByAppendingPathComponent:@"header.png"];
             Cell.header.image=[UIImage imageWithContentsOfFile:Path];
@@ -68,13 +64,13 @@
             }
             [Cell setBackgroundColor:tableView.backgroundColor];
             Cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            [Cell.othermessage setHidden:NO];
             Cell.other.frame=CGRectMake(70, 45, size.width, size.height);
             Cell.othermessage.frame=CGRectMake(50, 25, size.width+40, size.height+40);
-            
             Cell.othermessage.image = [self imageWithimage:[UIImage imageNamed:@"chat_recive_nor"]];
             Cell.othername.text=model.name;
             Cell.other.attributedText=[Utility emotionStrWithString:model.message];
+            Cell.image.image=[UIImage imageWithData:model.imageData];
             Cell.headers.image=[UIImage imageNamed:model.image];
             [Cell.headers.layer setCornerRadius:20];
             [Cell.headers setClipsToBounds:YES];
@@ -86,12 +82,10 @@
             }
             [Cell setBackgroundColor:tableView.backgroundColor];
             Cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
             Cell.othername.text=model.name;
-            
-            NSData *data=[[NSData alloc]initWithBase64EncodedString:model.message options:NSDataBase64DecodingIgnoreUnknownCharacters];
-            Cell.image.image=[UIImage imageWithData:data];
-            
+            [Cell.othermessage setHidden:YES];
+            Cell.other.attributedText=[Utility emotionStrWithString:model.message];
+            Cell.image.image=[UIImage imageWithData:model.imageData];
             Cell.headers.image=[UIImage imageNamed:model.image];
             [Cell.headers.layer setCornerRadius:20];
             [Cell.headers setClipsToBounds:YES];

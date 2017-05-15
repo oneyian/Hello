@@ -259,7 +259,7 @@
     MessageModel *model=[MessageModel messageWithModel:_MessageArray[indexPath.row]];
     if (![model.dataType isEqualToString:@"text"]) {
         ImageViewController *Image=[ImageViewController new];
-        [Image setImage:model.message];
+        [Image setImageData:model.imageData];
         Image.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
         [self presentViewController:Image animated:YES completion:nil];
     }
@@ -312,7 +312,7 @@
             NSBlockOperation *oper1=[NSBlockOperation blockOperationWithBlock:^{
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                     NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys: _appDelegate.mcManager.peerID.displayName,@"name",
-                                               imageStr,@"message",
+                                               imageData,@"message",
                                                @"0",@"type",
                                                @"image",@"datatype",
                                                [[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",
@@ -424,15 +424,27 @@
     NSData *Data = [[notification userInfo] objectForKey:@"data"];
     
     NSMutableDictionary *dataDict=[NSKeyedUnarchiver unarchiveObjectWithData:Data];
-
-    NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
-                               peerID.displayName,@"name",
-                               [dataDict objectForKey:@"message"],@"message",
-                               @"1",@"type",
-                               [dataDict objectForKey:@"image"],@"image",[dataDict objectForKey:@"datatype"],@"datatype",
-                               nil];
-
-    [_MessageArray addObject:messageData];
+    
+    if ([[dataDict objectForKey:@"datatype"]isEqualToString:@"text"]) {
+        NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
+                                   peerID.displayName,@"name",
+                                   [dataDict objectForKey:@"message"],@"message",
+                                   @"1",@"type",
+                                   [dataDict objectForKey:@"image"],@"image",[dataDict objectForKey:@"datatype"],@"datatype",
+                                   nil];
+        
+        [_MessageArray addObject:messageData];
+    }else{
+        NSData *data=[[NSData alloc]initWithBase64EncodedString:[dataDict objectForKey:@"message"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        
+        NSDictionary *messageData=[[NSDictionary alloc]initWithObjectsAndKeys:
+                                   peerID.displayName,@"name",
+                                   data,@"message",
+                                   @"1",@"type",
+                                   [dataDict objectForKey:@"image"],@"image",[dataDict objectForKey:@"datatype"],@"datatype",
+                                   nil];
+        [_MessageArray addObject:messageData];
+    }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [_Activity stopAnimating];

@@ -20,8 +20,7 @@
     [super viewDidLoad];
     _imageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 88, Width, Height-176)];
     [_imageView setContentMode:UIViewContentModeScaleAspectFit];
-    NSData *data=[[NSData alloc]initWithBase64EncodedString:_image options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    [_imageView setImage:[UIImage imageWithData:data]];
+    [_imageView setImage:[UIImage imageWithData:_imageData]];
     [self.view addSubview:_imageView];
     
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self     action:@selector(tap:)];
