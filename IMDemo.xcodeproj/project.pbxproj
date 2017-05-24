@@ -217,11 +217,11 @@
 		150741AA1EA0636600E24A1D /* IMDemo */ = {
 			isa = PBXGroup;
 			children = (
-				154079311EAD8D2600EDC05C /* MyObj-C */,
-				15FD208E1EB17A7700DF5BAD /* LoadViewController */,
-				15FD208F1EB17A9900DF5BAD /* HeaderImageController */,
-				157BE4AD1EA62A17007F3B2F /* HomeViewController */,
-				1586BAF51EA6173A0083F897 /* MessageController */,
+				154079311EAD8D2600EDC05C /* Class */,
+				15FD208E1EB17A7700DF5BAD /* 用户初始信息 */,
+				15FD208F1EB17A9900DF5BAD /* 头像设置 */,
+				157BE4AD1EA62A17007F3B2F /* 首页 */,
+				1586BAF51EA6173A0083F897 /* 聊天 */,
 				154079321EAD8D5200EDC05C /* Default */,
 				150741AB1EA0636600E24A1D /* Supporting Files */,
 			);
@@ -263,7 +263,7 @@
 			name = GetName;
 			sourceTree = "<group>";
 		};
-		154079311EAD8D2600EDC05C /* MyObj-C */ = {
+		154079311EAD8D2600EDC05C /* Class */ = {
 			isa = PBXGroup;
 			children = (
 				15D2E93B1EB1969C00A018BD /* UMSocial */,
@@ -280,7 +280,7 @@
 				150EA88A1EAEF79F001A4DA2 /* NSAttributedString+MyNSAttributedString.h */,
 				150EA88B1EAEF79F001A4DA2 /* NSAttributedString+MyNSAttributedString.m */,
 			);
-			name = "MyObj-C";
+			name = Class;
 			sourceTree = "<group>";
 		};
 		154079321EAD8D5200EDC05C /* Default */ = {
@@ -307,24 +307,24 @@
 			name = ImageItem;
 			sourceTree = "<group>";
 		};
-		157BE4AD1EA62A17007F3B2F /* HomeViewController */ = {
+		157BE4AD1EA62A17007F3B2F /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
 				159EEA711EA11BEB0013CD8C /* View */,
 				159EEA721EA11BF10013CD8C /* Controller */,
 			);
-			name = HomeViewController;
+			name = "首页";
 			sourceTree = "<group>";
 		};
-		1586BAF51EA6173A0083F897 /* MessageController */ = {
+		1586BAF51EA6173A0083F897 /* 聊天 */ = {
 			isa = PBXGroup;
 			children = (
-				15FD20911EB17B4600DF5BAD /* PopDevicesController */,
+				15FD20911EB17B4600DF5BAD /* 聊天室所有用户 */,
 				15A09A901EA71F2D00E4F941 /* Model */,
 				15A09A911EA71F3800E4F941 /* View */,
 				15A09A8F1EA71F2900E4F941 /* Controller */,
 			);
-			name = MessageController;
+			name = "聊天";
 			sourceTree = "<group>";
 		};
 		159EEA711EA11BEB0013CD8C /* View */ = {
@@ -502,22 +502,22 @@
 			name = ToolView;
 			sourceTree = "<group>";
 		};
-		15FD208E1EB17A7700DF5BAD /* LoadViewController */ = {
+		15FD208E1EB17A7700DF5BAD /* 用户初始信息 */ = {
 			isa = PBXGroup;
 			children = (
 				150B4DDC1EA6E8CF00BEC069 /* LoadViewController.h */,
 				150B4DDD1EA6E8CF00BEC069 /* LoadViewController.m */,
 			);
-			name = LoadViewController;
+			name = "用户初始信息";
 			sourceTree = "<group>";
 		};
-		15FD208F1EB17A9900DF5BAD /* HeaderImageController */ = {
+		15FD208F1EB17A9900DF5BAD /* 头像设置 */ = {
 			isa = PBXGroup;
 			children = (
 				15FD20921EB17B6400DF5BAD /* View */,
 				15FD20901EB17ADE00DF5BAD /* Controller */,
 			);
-			name = HeaderImageController;
+			name = "头像设置";
 			sourceTree = "<group>";
 		};
 		15FD20901EB17ADE00DF5BAD /* Controller */ = {
@@ -529,13 +529,13 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		15FD20911EB17B4600DF5BAD /* PopDevicesController */ = {
+		15FD20911EB17B4600DF5BAD /* 聊天室所有用户 */ = {
 			isa = PBXGroup;
 			children = (
 				15FD20971EB184DE00DF5BAD /* Controller */,
 				15FD20961EB184D400DF5BAD /* View */,
 			);
-			name = PopDevicesController;
+			name = "聊天室所有用户";
 			sourceTree = "<group>";
 		};
 		15FD20921EB17B6400DF5BAD /* View */ = {
