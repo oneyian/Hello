@@ -159,10 +159,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:_GetName.NameText.text forKey:@"username"];
         [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
         [_appDelegate.mcManager advertiseSelf:YES];
-        
-//        [self.DevicesArray addObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
-//        [self PresentMessageController];
-        
+
         _Alert =[UIAlertController alertControllerWithTitle:@"创建成功" message:@"正在等待其他用户进入..." preferredStyle:UIAlertControllerStyleAlert];
         [_Alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [[_appDelegate mcManager] advertiseSelf:NO];
@@ -179,11 +176,11 @@
         [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
         [_appDelegate.mcManager advertiseSelf:YES];
         
-//        [self PresentMessageController];
+        [self PresentMessageController];
 
-      [[_appDelegate mcManager] setupMCBrowser];
-      [[[_appDelegate mcManager] browser] setDelegate:self];
-      [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+//      [[_appDelegate mcManager] setupMCBrowser];
+//      [[[_appDelegate mcManager] browser] setDelegate:self];
+//      [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
     }
 }
 #pragma mark ##### 连接状态 #####

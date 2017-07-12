@@ -319,7 +319,8 @@
                                                nil];
                     
                     [_MessageArray addObject:messageData];
-                    [_MessageTable reloadData];
+                    /** 插入新数据 */
+                    [_MessageTable insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_MessageArray.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
                     [self ShowFootCell];
                     [_Activity stopAnimating];
                     
@@ -359,7 +360,8 @@
                                        nil];
             
             [_MessageArray addObject:messageData];
-            [_MessageTable reloadData];
+            /** 插入新数据 */
+            [_MessageTable insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_MessageArray.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
             [self ShowFootCell];
             
             NSMutableDictionary *dataDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:message,@"message",[[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",@"text",@"datatype", nil];
@@ -393,7 +395,8 @@
                                        nil];
             
             [_MessageArray addObject:messageData];
-            [_MessageTable reloadData];
+            /** 插入新数据 */
+            [_MessageTable insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_MessageArray.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
             [self ShowFootCell];
             
             NSMutableDictionary *dataDict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:message,@"message",[[NSUserDefaults standardUserDefaults] objectForKey:@"image"],@"image",@"text",@"datatype", nil];
@@ -448,7 +451,8 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [_Activity stopAnimating];
-        [_MessageTable reloadData];
+        /** 插入新数据 */
+        [_MessageTable insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_MessageArray.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         [self ShowFootCell];
     });
 }
