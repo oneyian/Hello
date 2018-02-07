@@ -24,5 +24,7 @@
 @property (nonatomic,strong) UILabel * title;
 /** 菜单 */
 @property (nonatomic,strong) UIButton * menu;
+/** 背景图片 */
+@property (nonatomic,strong) UIImageView * image;
 
 @end

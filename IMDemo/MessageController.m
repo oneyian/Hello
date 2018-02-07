@@ -74,11 +74,10 @@
     self.automaticallyAdjustsScrollViewInsets = NO;//关闭布局
     
     _HeaderBar=[[NavigationBar alloc]initWithFrame:CGRectMake(0, 0,Width , 64)];
+    _HeaderBar.image.image = [UIImage imageNamed:@"headerBackImage"];
     [_HeaderBar.menu setImage:[UIImage imageNamed:@"mulchat_header_icon_group"] forState:UIControlStateNormal];
     [_HeaderBar.menu setFrame:CGRectMake(Width-40, 25, 30, 30)];
     [_HeaderBar.menu addTarget:self action:@selector(menu:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [_HeaderBar setBackgroundImage:[UIImage imageNamed:@"nowlive_room_default_bkg"] forBarMetrics:UIBarMetricsDefault];
     _HeaderBar.title.text=@"Hello";
     [_HeaderBar.title setTextColor:[UIColor whiteColor]];
     [_HeaderBar setNavigationBarDalegate:self];
@@ -127,7 +126,7 @@
     PopDevices.popoverPresentationController.sourceView=menu;
     PopDevices.popoverPresentationController.sourceRect=menu.bounds;
     PopDevices.popoverPresentationController.backgroundColor=[UIColor whiteColor];
-    PopDevices.preferredContentSize = CGSizeMake(150, 200);
+    PopDevices.preferredContentSize = CGSizeMake(150, 300);
     PopDevices.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
     PopDevices.popoverPresentationController.delegate = self;
     [self presentViewController:PopDevices animated:YES completion:nil];

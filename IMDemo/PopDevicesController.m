@@ -30,7 +30,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_DevicesArray.count>0) {
-        return [DevicesCell SizeWithString:_DevicesArray[indexPath.row]].height+40;
+        return [DevicesCell SizeWithString:_DevicesArray[indexPath.row]].height+20;
     }else{
         return 0.01f;
     }
@@ -41,7 +41,7 @@
 }
 -(CGSize)preferredContentSize{
     if (self.popoverPresentationController != nil) {
-        CGSize size =CGSizeMake(150, 200);
+        CGSize size =CGSizeMake(150, 300);
         size = [_DeviceTable sizeThatFits:size];  //返回一个完美适应tableView的大小的 size
         return size;
     }else{

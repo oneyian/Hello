@@ -176,11 +176,15 @@
         [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]];
         [_appDelegate.mcManager advertiseSelf:YES];
         
-        [self PresentMessageController];
-
-//      [[_appDelegate mcManager] setupMCBrowser];
-//      [[[_appDelegate mcManager] browser] setDelegate:self];
-//      [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+        BOOL isDeBug = NO;
+        
+        if (isDeBug) {
+            [self PresentMessageController];
+        }else{
+            [[_appDelegate mcManager] setupMCBrowser];
+            [[[_appDelegate mcManager] browser] setDelegate:self];
+            [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+        }
     }
 }
 #pragma mark ##### 连接状态 #####

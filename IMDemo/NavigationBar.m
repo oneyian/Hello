@@ -9,12 +9,18 @@
 #import "NavigationBar.h"
 
 @implementation NavigationBar
+
 -(instancetype)initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
     if (self) {
         [self setTranslucent:YES];
         [self setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
         [self setShadowImage:[UIImage new]];
+        
+        _image = [[UIImageView alloc]initWithFrame:self.frame];
+        _image.contentMode = UIViewContentModeScaleAspectFill;
+        _image.clipsToBounds = YES;
+        [self addSubview:_image];
         
         _back=[[UIButton alloc]initWithFrame:CGRectMake(5, 20, 40, 40)];
         [_back setImage:[UIImage imageNamed:@"game_out"] forState:UIControlStateNormal];
