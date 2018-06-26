@@ -641,7 +641,7 @@
 				TargetAttributes = {
 					150741A71EA0636600E24A1D = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 2D55A4E449;
+						DevelopmentTeam = 4XAP7RVL83;
 						ProvisioningStyle = Automatic;
 					};
 					150741C01EA0636600E24A1D = {
@@ -890,7 +890,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 2D55A4E449;
+				DEVELOPMENT_TEAM = 4XAP7RVL83;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/IMDemo/UMSocial/SocialLibraries/QQ",
@@ -916,7 +916,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 2D55A4E449;
+				DEVELOPMENT_TEAM = 4XAP7RVL83;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/IMDemo/UMSocial/SocialLibraries/QQ",
